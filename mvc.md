@@ -45,7 +45,7 @@ Blog::del($id);
 $id = Blog::add($tile, $content);
 ```
 
-In order to write code like this, you should write some class files. And, you make 100 line code for blog, and another 100 line code for comment. Infact, you will find majority of these lines are similar, as most of them are CURD of database. And, once for a while, you'd expect someone has write it for you.
+In order to write code like this, you should write some class files. And, you make 100 line code for blog, and another 100 line code for comment. Infact, you will find majority of these lines are similar, as most of them are CURD of database. Yes, you are repeating yourself. And, once for a while, you'd expect someone has write it for you.
 Someone did, and they call them ORM. With ORM, you can directly write code like this:
 
 ```php
