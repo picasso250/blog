@@ -1,4 +1,4 @@
-Why mvc in php
+Why MVC in PHP
 =================
 
 Generally, we will seperate logic(PHP code) and template(HTML code) into different files. If you are wrighting a blog web site, it likes as below in your project:
@@ -21,19 +21,23 @@ index.html
 Well, it fits for you. but when the project grow, it starts to sucks to write SQL everywhere. So maybe you will write some functions such as:
 
 ```php
-function get_blog($id);
-function get_blog_list_by_tag($tag, $count);
+function get_blog($id); // will be used in blog page and edit page
 ```
 
-But Projects continues to grow, and you will have functions like:
+May be you will put these functions into a single file. These functions are called Model. Your previous file contain logic code which see what user input and decide what to output is called Controller. And you template will be called View.
+That's where cames the MVC.
+
+Once you extract a layer called Model, you will find something new from this new perspective.
+
+Let's say your projects continues to grow(you want the feature of commenting), and you will have functions like:
 ```php
-function get_comments_of($blog_id);
+function get_comments_of($blog_id, $max_count); // will be used in blog list page and blog page
 ```
 
-All you want to do is to fetch something from database. This purpose canbe well extract into some concept, which is called **Ojbect**.
+All you want to do is to fetch something from database. This purpose canbe well extract into one concept, which is called **Ojbect**.
 Yes, people always talk about Object Oriented Programing, that's where it comes.
 
-So, your code will be like this.
+So if you use OO, your code will be like:
 ```php
 $data = Blog::get($id);
 $comments = Comment::getListByBlog($blogId);
@@ -41,8 +45,8 @@ Blog::del($id);
 $id = Blog::add($tile, $content);
 ```
 
-In order to write code like this, you should write some class files. And, you make 100 line code for blog, and another 100 line code for comment. Infact, you will find majority of these lines are similar, as most of them are CURD of database. And, once for while, you'd expect someone has write it for you.
-Someone did. They call them ORM. With ORM, you can directly write code like this:
+In order to write code like this, you should write some class files. And, you make 100 line code for blog, and another 100 line code for comment. Infact, you will find majority of these lines are similar, as most of them are CURD of database. And, once for a while, you'd expect someone has write it for you.
+Someone did, and they call them ORM. With ORM, you can directly write code like this:
 
 ```php
 <?php
@@ -59,7 +63,7 @@ foreach($books as $book) {
   echo  $book->getAuthor()->getFullName();
 }
 ```
-The code above is form [index of Propel](http://propelorm.org/).
+The code above is from [index of Propel](http://propelorm.org/).
 
 You can use a mature lib of ORM, or you can, as I did, write your own ORM.
 
