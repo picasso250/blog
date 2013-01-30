@@ -1,0 +1,99 @@
+测试案例列表
+------------
+
+（请根据流程图来做
+http://picasso250.github.com/cheng/flow/start.html
+）
+
+1. **主流程**
+http://picasso250.github.com/cheng/flow/main_sys.html
+
+1. **付账给工厂流程**
+http://picasso250.github.com/cheng/flow/pay_factory.html
+
+1. **工厂消耗石头流程**
+http://picasso250.github.com/cheng/flow/stone_factory.html
+
+1. **用户定制流程**
+http://picasso250.github.com/cheng/flow/customize_sys.html
+
+1. **客户充值流程**
+http://picasso250.github.com/cheng/flow/recharge_customer.html
+
+1. **工厂充值流程**
+http://picasso250.github.com/cheng/flow/recharge_factory.html
+
+1. **工厂充石流程**
+http://picasso250.github.com/cheng/flow/recharge_factory_stone.html
+
+订单状态列表
+------------
+
+**现有的列表**
+
+第一列的状态将会显示在左边的导航条里，第二列的按钮将会显示在订单管理中。
+
+|  状态名称  | 下一步按钮 |  下一步函数名  |       含义       | where |
+|:-----------|:----------:|:---------------|:-----------------|:----|
+| 待确认     | 审核       | confirm        | 用户已经提交订单 | cus.submit |
+| 已交工厂   | 完工       | facotryDone    | 确认这笔交易使得 | cus.confirm fac.in |
+| 工厂完工   | 确认售价   | confirmPriceOf | 工厂价格固定     | fac.finish |
+| 用户未结清 |            |                | 客户价格固定，但客户的款还没到（齐） | cus.tobepaid |
+| 工厂未结清 |            |                | 工厂的款还没给打过去（完） | fac.tobepaid |
+| 已完成     |            |                | 客户款完成了 | cus.done |
+| 已取消     |            |                | 取消的订单 | cus.cancel |
+| 全部订单   |            |                | 所有订单 | !cus.incart |
+
+注意，上述的状态之间并不是互斥的。
+
+**用户未结清** 在用户界面显示为 **未结清** ， **工厂未结清** 在用户界面上不可见。
+
+**建议的列表：**
+
+|  状态名称  | 操作按钮 |     查找条件     |
+|:-----------|:--------:|:-----------------|
+| 待确认     | 审核     | cus.tbc          |
+| 确认，已交工厂 | 完工 / 确认用户价格 | fac.in  |
+| 工厂完工，但未结清 | 付款给工厂 | fac.tbp  |
+| 用户价格已确认，但未结清 | 扣款 | cus.tbp |
+| 用户付清   |         | cus.done         |
+| 已付清工厂 |         | fac.done         |
+| 已取消     |         | cus.cancel       |
+| 全部订单   |         | cus.ic           |
+
+**工厂完工，但未结清** 和 **已付清工厂** 在用户界面上不可见。
+
+**订单的状态**
+- 订单中的客户相关
+ - 未发货的订单
+ - 已发货且未付清的订单
+ - 完成的订单
+- 订单中的工厂相关
+ - 在厂的订单
+ - 工厂完成且未付清的订单
+ - 完成的订单
+
+In Code
+
+- CusOrder
+ 1. InCart
+ 2. Submit
+ 3. Confirm
+ 4. ConfirmPrice
+ 5. Done
+- FacOrder
+ 1. In
+ 2. ConfirmPrice
+ 3. Done
+
+右边的状态
+
+| CusOrder | FacOrder | State |
+|:------:|:-------:|:-------|
+| InCart | | |
+| Submit | | 待确认 |
+| Confirm | In | 已交工厂 |
+|  | ConfirmPrice | 工厂完工 |
+| ConfirmPrice | | 未结清 |
+| Done |  | 已完成 |
+| Cancel | | 已取消 |
