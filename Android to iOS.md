@@ -3,16 +3,15 @@
 | Java | Objective-C |
 |-----:|:------------|
 | Interface | Protocol |
-| this | self |
-| bool | BOOL |
-| true | false |
 
-**Key Word**
+**Keyword**
+
 | Java | Objective-C |
 |-----:|:------------|
 | this | self |
 | bool | BOOL |
-| true | false |
+| true | YES |
+| false | NO |
 | null | nil |
 
 **Method Call**
