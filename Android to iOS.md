@@ -24,7 +24,7 @@ p = new Obj(q);
 
 ```objc
 o = [[Obj alloc] init];
-p = [[Obj alloc] initWithAnotherObj: q];
+p = [[Obj alloc] initWithAnotherObj:q];
 ```
 
 **String**
