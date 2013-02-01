@@ -89,7 +89,6 @@ class MyClass extends Object {
 - (id)initWithString:(NSString *)aName;
 + (MyClass *)myClassWithString:(NSString *)aName;
 @end;
-}
 
 // ==== file: MyClass.m ====
 #import "MyClass.h"
