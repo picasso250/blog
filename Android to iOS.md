@@ -107,3 +107,52 @@ class MyClass extends Object {
 }
 @end
 ```
+
+代理
+
+代理的好处就是可以将程序中自定义的那一部分集中到一起。
+
+命名规则
+
+简明：简洁、明白
+
+| Code | 评价 |
+|:-----|:----|
+| insertObject:atIndex: | 好 |
+| insert:at: | 不清楚，插入什么？ |
+| removeObjectAtIndex: | 好 |
+| removeObject: | 好，因为是根据指针删除的 |
+| remove: | 不清楚，删除什么？ |
+
+不要乱用缩写
+
+| Code | 评价 |
+|:-----|:----|
+| destinationSelection | 好 |
+| destSel | 不好 |
+| setBackgroundColor: | 好 |
+| setBkgdColor: | 不好 |
+
+一些知名的缩写
+
+| 缩写 | 全拼 |
+|:-----|:-----|
+| alloc | Allocate |
+| alt | Alternate |
+| app | Application |
+| calc | Calculate |
+| dealloc | Deallocate |
+| func | Function |
+| horiz | Horizontal |
+| info | information |
+| init | Initialize |
+| int | Integer |
+| max | Maximum |
+| min | Minimum |
+| msg | Message |
+| nib | Interface Builder archive |
+| pboard | PasteBoard |
+| rect | Rectangle |
+| Rep | Representation |
+| temp | Temporary |
+| vert | Vertical |
