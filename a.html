@@ -1,0 +1,1601 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh" lang="zh">
+<head profile="http://purl.org/NET/erdf/profile">
+ <title>PHP: fgets - Manual</title>
+ <style type="text/css" media="all">
+  @import url("http://static.php.net/www.php.net/styles/site.css");
+  @import url("http://static.php.net/www.php.net/styles/phpnet.css");
+  
+ </style>
+ <!--[if IE]><![if gte IE 6]><![endif]-->
+  <style type="text/css" media="print">
+   @import url("http://static.php.net/www.php.net/styles/print.css");
+  </style>
+ <!--[if IE]><![endif]><![endif]-->
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+ <link rel="shortcut icon" href="http://static.php.net/www.php.net/favicon.ico" />
+ <link rel="contents" href="index.php" />
+ <link rel="index" href="ref.filesystem.php" />
+ <link rel="prev" href="function.fgetcsv.php" />
+ <link rel="next" href="function.fgetss.php" />
+ <link rel="schema.dc" href="http://purl.org/dc/elements/1.1/" />
+ <link rel="schema.rdfs" href="http://www.w3.org/2000/01/rdf-schema#" />
+ <link rev="canonical" rel="self alternate shorter shorturl shortlink" href="http://php.net/fgets" />
+ <link rel="license" href="http://creativecommons.org/licenses/by/3.0/" about="#content" />
+ <link rel="canonical" href="//php.net/manual/zh/function.fgets.php" />
+ <script type="text/javascript" src="http://static.php.net/www.php.net/userprefs.js"></script>
+ <base href="http://www.php.net/manual/zh/function.fgets.php" />
+ <meta http-equiv="Content-language" content="zh" />
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    var toggleImage = function(elem) {
+        if ($(elem).hasClass("shown")) {
+            $(elem).removeClass("shown").addClass("hidden");
+            $("img", elem).attr("src", "/images/notes-add.gif");
+        }
+        else {
+            $(elem).removeClass("hidden").addClass("shown");
+            $("img", elem).attr("src", "/images/notes-reject.gif");
+        }
+    };
+
+    $(".soft-deprecation-notice h1.title").each(function() {
+        $(this).prepend("<a class='toggler shown' href='#'><img src='/images/notes-reject.gif' alt='minimize' /></a> ");
+    });
+    $(".refsect1 h3.title").each(function() {
+        url = "https://bugs.php.net/report.php?bug_type=Documentation+problem&amp;manpage=" + $(this).parent().parent().attr("id") + "%23" + $(this).parent().attr("id");
+        $(this).parent().prepend("<div class='reportbug'><a href='" + url + "'>Report a bug</a></div>");
+        $(this).prepend("<a class='toggler shown' href='#'><img src='/images/notes-reject.gif' alt='reject note' /></a> ");
+    });
+    $("#usernotes .head").each(function() {
+        $(this).prepend("<a class='toggler shown' href='#'><img src='/images/notes-reject.gif' alt='reject note' /></a> ");
+    });
+    $(".soft-deprecation-notice h1.title .toggler").click(function() {
+        $(this).parent().siblings().slideToggle("slow");
+        toggleImage(this);
+        return false;
+    });
+    $(".refsect1 h3.title .toggler").click(function() {
+        $(this).parent().siblings().slideToggle("slow");
+        toggleImage(this);
+        return false;
+    });
+    $("#usernotes .head .toggler").click(function() {
+        $(this).parent().next().slideToggle("slow");
+        toggleImage(this);
+        return false;
+    });
+});
+</script>
+<script type="text/javascript" src="/js/usernotes.js"></script>
+
+</head>
+<body>
+
+<div id="headnav">
+ <a href="/" rel="home"><img src="http://static.php.net/www.php.net/images/php.gif"
+ alt="PHP" width="120" height="67" id="phplogo" /></a>
+ <div id="headmenu">
+  <a href="/downloads.php">downloads</a> |
+  <a href="/docs.php">documentation</a> |
+  <a href="/FAQ.php">faq</a> |
+  <a href="/support.php">getting help</a> |
+  <a href="/mailing-lists.php">mailing lists</a> |
+  <a href="/license">licenses</a> |
+  <a href="https://wiki.php.net/">wiki</a> |
+  <a href="https://bugs.php.net/">reporting bugs</a> |
+  <a href="/sites.php">php.net sites</a> |
+  <a href="/conferences/">conferences</a> |
+  <a href="/my.php">my php.net</a>
+ </div>
+</div>
+
+<div id="headsearch">
+ <form method="post" action="/search.php" id="topsearch">
+  <p>
+   <span title="Keyboard shortcut: Alt+S (Win), Ctrl+S (Apple)">
+    <span class="shortkey">s</span>earch for
+   </span>
+   <input type="text" name="pattern" value="" size="30" accesskey="s" />
+   <span>in the</span>
+   <select name="show">
+    <option value="all"      >all php.net sites</option>
+    <option value="local"    >this mirror only</option>
+    <option value="quickref" selected="selected">function list</option>
+    <option value="manual"   >online documentation</option>
+    <option value="bugdb"    >bug database</option>
+    <option value="news_archive">Site News Archive</option>
+    <option value="changelogs">All Changelogs</option>
+    <option value="pear"     >just pear.php.net</option>
+    <option value="pecl"     >just pecl.php.net</option>
+    <option value="talks"    >just talks.php.net</option>
+    <option value="maillist" >general mailing list</option>
+    <option value="devlist"  >developer mailing list</option>
+    <option value="phpdoc"   >documentation mailing list</option>
+   </select>
+   <input type="image"
+          src="http://static.php.net/www.php.net/images/small_submit_white.gif"
+          class="submit" alt="search" />
+   <input type="hidden" name="lang" value="zh" />
+  </p>
+ </form>
+</div>
+
+<div id="layout_2">
+ <div id="leftbar">
+<!--UdmComment-->
+<ul class="toc">
+ <li class="header home"><a href="index.php">PHP Manual</a></li>
+ <li class="header up"><a href="funcref.php">函数参考</a></li>
+ <li class="header up"><a href="refs.fileprocess.file.php">文件系统相关扩展</a></li>
+ <li class="header up"><a href="book.filesystem.php">Filesystem</a></li>
+ <li class="header up"><a href="ref.filesystem.php">Filesystem 函数</a></li>
+ <li><a href="function.basename.php">basename</a></li>
+ <li><a href="function.chgrp.php">chgrp</a></li>
+ <li><a href="function.chmod.php">chmod</a></li>
+ <li><a href="function.chown.php">chown</a></li>
+ <li><a href="function.clearstatcache.php">clearstatcache</a></li>
+ <li><a href="function.copy.php">copy</a></li>
+ <li><a href="function.delete.php">delete</a></li>
+ <li><a href="function.dirname.php">dirname</a></li>
+ <li><a href="function.disk-free-space.php">disk_<span class="w"> </span>free_<span class="w"> </span>space</a></li>
+ <li><a href="function.disk-total-space.php">disk_<span class="w"> </span>total_<span class="w"> </span>space</a></li>
+ <li><a href="function.diskfreespace.php">diskfreespace</a></li>
+ <li><a href="function.fclose.php">fclose</a></li>
+ <li><a href="function.feof.php">feof</a></li>
+ <li><a href="function.fflush.php">fflush</a></li>
+ <li><a href="function.fgetc.php">fgetc</a></li>
+ <li><a href="function.fgetcsv.php">fgetcsv</a></li>
+ <li class="active"><a href="function.fgets.php">fgets</a></li>
+ <li><a href="function.fgetss.php">fgetss</a></li>
+ <li><a href="function.file-exists.php">file_<span class="w"> </span>exists</a></li>
+ <li><a href="function.file-get-contents.php">file_<span class="w"> </span>get_<span class="w"> </span>contents</a></li>
+ <li><a href="function.file-put-contents.php">file_<span class="w"> </span>put_<span class="w"> </span>contents</a></li>
+ <li><a href="function.file.php">file</a></li>
+ <li><a href="function.fileatime.php">fileatime</a></li>
+ <li><a href="function.filectime.php">filectime</a></li>
+ <li><a href="function.filegroup.php">filegroup</a></li>
+ <li><a href="function.fileinode.php">fileinode</a></li>
+ <li><a href="function.filemtime.php">filemtime</a></li>
+ <li><a href="function.fileowner.php">fileowner</a></li>
+ <li><a href="function.fileperms.php">fileperms</a></li>
+ <li><a href="function.filesize.php">filesize</a></li>
+ <li><a href="function.filetype.php">filetype</a></li>
+ <li><a href="function.flock.php">flock</a></li>
+ <li><a href="function.fnmatch.php">fnmatch</a></li>
+ <li><a href="function.fopen.php">fopen</a></li>
+ <li><a href="function.fpassthru.php">fpassthru</a></li>
+ <li><a href="function.fputcsv.php">fputcsv</a></li>
+ <li><a href="function.fputs.php">fputs</a></li>
+ <li><a href="function.fread.php">fread</a></li>
+ <li><a href="function.fscanf.php">fscanf</a></li>
+ <li><a href="function.fseek.php">fseek</a></li>
+ <li><a href="function.fstat.php">fstat</a></li>
+ <li><a href="function.ftell.php">ftell</a></li>
+ <li><a href="function.ftruncate.php">ftruncate</a></li>
+ <li><a href="function.fwrite.php">fwrite</a></li>
+ <li><a href="function.glob.php">glob</a></li>
+ <li><a href="function.is-dir.php">is_<span class="w"> </span>dir</a></li>
+ <li><a href="function.is-executable.php">is_<span class="w"> </span>executable</a></li>
+ <li><a href="function.is-file.php">is_<span class="w"> </span>file</a></li>
+ <li><a href="function.is-link.php">is_<span class="w"> </span>link</a></li>
+ <li><a href="function.is-readable.php">is_<span class="w"> </span>readable</a></li>
+ <li><a href="function.is-uploaded-file.php">is_<span class="w"> </span>uploaded_<span class="w"> </span>file</a></li>
+ <li><a href="function.is-writable.php">is_<span class="w"> </span>writable</a></li>
+ <li><a href="function.is-writeable.php">is_<span class="w"> </span>writeable</a></li>
+ <li><a href="function.lchgrp.php">lchgrp</a></li>
+ <li><a href="function.lchown.php">lchown</a></li>
+ <li><a href="function.link.php">link</a></li>
+ <li><a href="function.linkinfo.php">linkinfo</a></li>
+ <li><a href="function.lstat.php">lstat</a></li>
+ <li><a href="function.mkdir.php">mkdir</a></li>
+ <li><a href="function.move-uploaded-file.php">move_<span class="w"> </span>uploaded_<span class="w"> </span>file</a></li>
+ <li><a href="function.parse-ini-file.php">parse_<span class="w"> </span>ini_<span class="w"> </span>file</a></li>
+ <li><a href="function.parse-ini-string.php">parse_<span class="w"> </span>ini_<span class="w"> </span>string</a></li>
+ <li><a href="function.pathinfo.php">pathinfo</a></li>
+ <li><a href="function.pclose.php">pclose</a></li>
+ <li><a href="function.popen.php">popen</a></li>
+ <li><a href="function.readfile.php">readfile</a></li>
+ <li><a href="function.readlink.php">readlink</a></li>
+ <li><a href="function.realpath-cache-get.php">realpath_<span class="w"> </span>cache_<span class="w"> </span>get</a></li>
+ <li><a href="function.realpath-cache-size.php">realpath_<span class="w"> </span>cache_<span class="w"> </span>size</a></li>
+ <li><a href="function.realpath.php">realpath</a></li>
+ <li><a href="function.rename.php">rename</a></li>
+ <li><a href="function.rewind.php">rewind</a></li>
+ <li><a href="function.rmdir.php">rmdir</a></li>
+ <li><a href="function.set-file-buffer.php">set_<span class="w"> </span>file_<span class="w"> </span>buffer</a></li>
+ <li><a href="function.stat.php">stat</a></li>
+ <li><a href="function.symlink.php">symlink</a></li>
+ <li><a href="function.tempnam.php">tempnam</a></li>
+ <li><a href="function.tmpfile.php">tmpfile</a></li>
+ <li><a href="function.touch.php">touch</a></li>
+ <li><a href="function.umask.php">umask</a></li>
+ <li><a href="function.unlink.php">unlink</a></li>
+</ul><!--/UdmComment-->
+
+ </div>
+ <div id="content" class="manual/zh">
+<!--UdmComment-->
+<div class="manualnavbar manualnavbar_top">
+ <span class="next">
+  <a href="function.fgetss.php">fgetss<img src="http://static.php.net/www.php.net/images/caret-r.gif" alt="&gt;" width="11" height="7" /></a>
+ </span>
+ <span class="prev">
+  <a href="function.fgetcsv.php"><img src="http://static.php.net/www.php.net/images/caret-l.gif" alt="&lt;" width="11" height="7" />fgetcsv</a>
+ </span>
+ <hr />
+ <span class="lastupdated">[<a href="https://edit.php.net/?project=PHP&amp;perm=zh/function.fgets.php">edit</a>] Last updated: Fri, 08 Mar 2013</span>
+ <div class="langchooser">
+  <form action="/manual/change.php" method="get">
+   <p>view this page in </p><fieldset><select name="page">
+    <option value="en/function.fgets.php">English</option>
+    <option value="pt_BR/function.fgets.php">Brazilian Portuguese</option>
+    <option value="fr/function.fgets.php">French</option>
+    <option value="de/function.fgets.php">German</option>
+    <option value="it/function.fgets.php">Italian</option>
+    <option value="ja/function.fgets.php">Japanese</option>
+    <option value="ro/function.fgets.php">Romanian</option>
+    <option value="ru/function.fgets.php">Russian</option>
+    <option value="es/function.fgets.php">Spanish</option>
+    <option value="tr/function.fgets.php">Turkish</option>
+    <option value="help-translate.php">Other</option>
+   </select>
+   <input type="image" src="http://static.php.net/www.php.net/images/small_submit.gif" id="changeLangImage" alt="Change language" />
+  </fieldset></form>
+ </div>
+</div>
+<!--/UdmComment-->
+
+<div id="function.fgets" class="refentry">
+ <div class="refnamediv">
+  <h1 class="refname">fgets</h1>
+  <p class="verinfo">(PHP 4, PHP 5)</p><p class="refpurpose"><span class="refname">fgets</span> &mdash; <span class="dc-title">从文件指针中读取一行</span></p>
+
+ </div>
+ <div class="refsect1 description" id="refsect1-function.fgets-description">
+  <h3 class="title">说明</h3>
+  <div class="methodsynopsis dc-description">
+   <span class="type">string</span> <span class="methodname"><strong>fgets</strong></span>
+    ( <span class="methodparam"><span class="type">resource</span> <code class="parameter">$handle</code></span>
+   [, <span class="methodparam"><span class="type">int</span> <code class="parameter">$length</code></span>
+  ] )</div>
+
+  <p class="para rdfs-comment">
+   从文件指针中读取一行。
+  </p>
+ </div>
+
+
+ <div class="refsect1 parameters" id="refsect1-function.fgets-parameters">
+  <h3 class="title">参数</h3>
+  <p class="para">
+   <dl>
+
+    <dt>
+
+     <span class="term"><em><code class="parameter">handle</code></em></span>
+     <dd>
+
+      <p class="para">文件指针必须是有效的，必须指向由
+ <span class="function"><a href="function.fopen.php" class="function">fopen()</a></span> 或  <span class="function"><a href="function.fsockopen.php" class="function">fsockopen()</a></span> 成功打开的文件(并还未由  <span class="function"><a href="function.fclose.php" class="function">fclose()</a></span> 关闭)。</p>
+     </dd>
+
+    </dt>
+
+    <dt>
+
+     <span class="term"><em><code class="parameter">length</code></em></span>
+     <dd>
+
+      <p class="para">
+       从 <em><code class="parameter">handle</code></em>
+   指向的文件中读取一行并返回长度最多为 <em><code class="parameter">length</code></em> - 1
+   字节的字符串。碰到换行符（包括在返回值中）、EOF 或者已经读取了 length - 1
+   字节后停止（看先碰到那一种情况）。如果没有指定
+   <em><code class="parameter">length</code></em>，则默认为 1K，或者说 1024 字节。
+      </p>
+      <blockquote class="note"><p><strong class="note">Note</strong>: 
+       <p class="para">
+       从 PHP 4.3 开始，忽略掉
+    length 则行的长度被假定为 1024，将继续从流中读取数据直到行结束。如果文件中的大多数行都大于
+    8KB，则在脚本中指定最大行的长度在利用资源上更为有效。
+       </p>
+      </p></blockquote>
+     </dd>
+
+    </dt>
+
+   </dl>
+
+  </p>
+ </div>
+
+
+ <div class="refsect1 returnvalues" id="refsect1-function.fgets-returnvalues">
+  <h3 class="title">返回值</h3>
+  <p class="para">
+   从指针 <em><code class="parameter">handle</code></em> 指向的文件中读取了 <em><code class="parameter">length</code></em> - 1 字节后返回字符串。 
+   如果文件指针中没有更多的数据了则返回 <strong><code>FALSE</code></strong>。
+  </p>
+  <p class="para">
+   错误发生时返回 <strong><code>FALSE</code></strong>。
+  </p>
+ </div>
+
+
+ <div class="refsect1 changelog" id="refsect1-function.fgets-changelog">
+  <h3 class="title">更新日志</h3>
+  <p class="para">
+   <table class="doctable informaltable">
+    
+     <thead>
+      <tr>
+       <th>版本</th>
+       <th>说明</th>
+      </tr>
+
+     </thead>
+
+     <tbody class="tbody">
+      <tr>
+       <td>4.3.0</td>
+       <td>
+         <span class="function"><strong>fgets()</strong></span> 开始二进制安全
+       </td>
+      </tr>
+
+      <tr>
+       <td>4.2.0</td>
+       <td>
+        <em><code class="parameter">length</code></em> 参数成为可选。
+       </td>
+      </tr>
+
+     </tbody>
+    
+   </table>
+
+  </p>
+ </div>
+
+
+ <div class="refsect1 examples" id="refsect1-function.fgets-examples">
+  <h3 class="title">范例</h3>
+  <p class="para">
+   <div class="example" id="example-2246">
+    <p><strong>Example #1 逐行读取文件</strong></p>
+    <div class="example-contents">
+<div class="phpcode"><code><span style="color: #000000">
+<span style="color: #0000BB">&lt;?php<br />$handle&nbsp;</span><span style="color: #007700">=&nbsp;@</span><span style="color: #0000BB">fopen</span><span style="color: #007700">(</span><span style="color: #DD0000">"/tmp/inputfile.txt"</span><span style="color: #007700">,&nbsp;</span><span style="color: #DD0000">"r"</span><span style="color: #007700">);<br />if&nbsp;(</span><span style="color: #0000BB">$handle</span><span style="color: #007700">)&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;((</span><span style="color: #0000BB">$buffer&nbsp;</span><span style="color: #007700">=&nbsp;</span><span style="color: #0000BB">fgets</span><span style="color: #007700">(</span><span style="color: #0000BB">$handle</span><span style="color: #007700">,&nbsp;</span><span style="color: #0000BB">4096</span><span style="color: #007700">))&nbsp;!==&nbsp;</span><span style="color: #0000BB">false</span><span style="color: #007700">)&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #0000BB">$buffer</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!</span><span style="color: #0000BB">feof</span><span style="color: #007700">(</span><span style="color: #0000BB">$handle</span><span style="color: #007700">))&nbsp;{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;</span><span style="color: #DD0000">"Error:&nbsp;unexpected&nbsp;fgets()&nbsp;fail\n"</span><span style="color: #007700">;<br />&nbsp;&nbsp;&nbsp;&nbsp;}<br />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000BB">fclose</span><span style="color: #007700">(</span><span style="color: #0000BB">$handle</span><span style="color: #007700">);<br />}<br /></span><span style="color: #0000BB">?&gt;</span>
+</span>
+</code></div>
+    </div>
+
+   </div>
+  </p>
+ </div>
+
+
+ <div class="refsect1 notes" id="refsect1-function.fgets-notes">
+  <h3 class="title">注释</h3>
+  <blockquote class="note"><p><strong class="note">Note</strong>: <span class="simpara">在读取在 Macintosh 电脑中或由其创建的文件时， 如果 PHP
+不能正确的识别行结束符，启用运行时配置可选项 <a href="filesystem.configuration.php#ini.auto-detect-line-endings" class="link">auto_detect_line_endings</a>
+也许可以解决此问题。</span></p></blockquote>
+  <blockquote class="note"><p><strong class="note">Note</strong>: 
+   <p class="para">
+    习惯了 C 语言中  <span class="function"><strong>fgets()</strong></span> 语法的人应该注意到 <em>EOF</em>
+   是怎样被返回的。
+   </p>
+  </p></blockquote>
+ </div>
+
+
+ <div class="refsect1 seealso" id="refsect1-function.fgets-seealso">
+  <h3 class="title">参见</h3>
+  <p class="para">
+   <ul class="simplelist">
+    <li class="member"> <span class="function"><a href="function.fgetss.php" class="function" rel="rdfs-seeAlso">fgetss()</a> - 从文件指针中读取一行并过滤掉 HTML 标记</span></li>
+    <li class="member"> <span class="function"><a href="function.fread.php" class="function" rel="rdfs-seeAlso">fread()</a> - 读取文件（可安全用于二进制文件）</span></li>
+    <li class="member"> <span class="function"><a href="function.fgetc.php" class="function" rel="rdfs-seeAlso">fgetc()</a> - 从文件指针中读取字符</span></li>
+    <li class="member"> <span class="function"><a href="function.stream-get-line.php" class="function" rel="rdfs-seeAlso">stream_get_line()</a> - Gets line from stream resource up to a given delimiter</span></li>
+    <li class="member"> <span class="function"><a href="function.fopen.php" class="function" rel="rdfs-seeAlso">fopen()</a> - 打开文件或者 URL</span></li>
+    <li class="member"> <span class="function"><a href="function.popen.php" class="function" rel="rdfs-seeAlso">popen()</a> - 打开进程文件指针</span></li>
+    <li class="member"> <span class="function"><a href="function.fsockopen.php" class="function" rel="rdfs-seeAlso">fsockopen()</a> - Open Internet or Unix domain socket connection</span></li>
+    <li class="member"> <span class="function"><a href="function.stream-set-timeout.php" class="function" rel="rdfs-seeAlso">stream_set_timeout()</a> - Set timeout period on a stream</span></li>
+   </ul>
+  </p>
+ </div>
+
+</div><br /><br /><!--UdmComment-->
+<div class="manualnavbar manualnavbar_bottom">
+ <span class="next">
+  <a href="function.fgetss.php">fgetss<img src="http://static.php.net/www.php.net/images/caret-r.gif" alt="&gt;" width="11" height="7" /></a>
+ </span>
+ <span class="prev">
+  <a href="function.fgetcsv.php"><img src="http://static.php.net/www.php.net/images/caret-l.gif" alt="&lt;" width="11" height="7" />fgetcsv</a>
+ </span>
+ <hr />
+ <span class="lastupdated">[<a href="https://edit.php.net/?project=PHP&amp;perm=zh/function.fgets.php">edit</a>] Last updated: Fri, 08 Mar 2013</span>
+ <div class="langchooser">
+  &nbsp;
+ </div>
+</div>
+<!--/UdmComment-->
+
+
+<div id="usernotes">
+ <div class="head">
+  <span class="action"><a href="/manual/add-note.php?sect=function.fgets&amp;redirect=http://www.php.net/manual/zh/function.fgets.php"><img src="http://static.php.net/www.php.net/images/notes-add.gif" alt="add a note" width="13" height="13" class="middle" /></a> <small><a href="/manual/add-note.php?sect=function.fgets&amp;redirect=http://www.php.net/manual/zh/function.fgets.php">add a note</a></small></span>
+  <small>User Contributed Notes</small>
+  <strong>fgets</strong> - [<em>34</em> notes]
+ </div><div id="allnotes">
+ <a name="77893"></a><div class="note">  <div class="votes">
+    <div id="Vu77893">
+    <a href="/manual/vote-note.php?id=77893&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd77893">
+    <a href="/manual/vote-note.php?id=77893&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V77893" title="100% like this...">
+    2
+    </div>
+  </div>
+  <a href="#77893" class="name">
+  <strong class="user"><em>anacreo has gmail</em></strong></a><a class="genanchor" href="#77893"> &para;</a><div class="date" title="2007-09-18 07:15"><strong>5 years ago</strong></div>
+  <div class="text" id="Hcom77893">
+<div class="phpcode"><code><span class="html">
+I'm using this function to modify the header of a large postscript document on copy...&nbsp; Works extremely quickly so far...<br />
+<br />
+function write($filename) {<br />
+&nbsp;&nbsp; &nbsp; $fh = fopen($this-&gt;sourceps,'r');<br />
+&nbsp;&nbsp; &nbsp; $fw = fopen($filename,'w');<br />
+<br />
+&nbsp;&nbsp; &nbsp; while (!feof($fh)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; $buffer = fgets($fh);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; fwrite($fw,$buffer);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; if (!$setupfound &amp;&amp; ereg("^%%BeginSetup",$buffer)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; $setupfound++;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; if (array_key_exists("$filename",$this-&gt;output)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; foreach ($this-&gt;output[$filename] as $function =&gt; $value) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; fwrite($fw,$value);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; }<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; stream_copy_to_stream($fh,$fw);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; }<br />
+&nbsp;&nbsp; &nbsp; }<br />
+&nbsp;&nbsp; &nbsp; fclose($fw);<br />
+&nbsp;&nbsp; &nbsp; fclose($fh);<br />
+&nbsp;&nbsp; }</span>
+</code></div>
+  </div>
+ </div>
+ <a name="47536"></a><div class="note">  <div class="votes">
+    <div id="Vu47536">
+    <a href="/manual/vote-note.php?id=47536&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd47536">
+    <a href="/manual/vote-note.php?id=47536&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V47536" title="100% like this...">
+    2
+    </div>
+  </div>
+  <a href="#47536" class="name">
+  <strong class="user"><em>angelo [at] mandato &lt;dot&gt; com</em></strong></a><a class="genanchor" href="#47536"> &para;</a><div class="date" title="2004-11-18 10:43"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom47536">
+<div class="phpcode"><code><span class="html">
+Sometimes the strings you want to read from a file are not separated by an end of line character.&nbsp; the C style getline() function solves this.&nbsp; Here is my version:<br />
+<span class="default">&lt;?php<br />
+</span><span class="keyword">function </span><span class="default">getline</span><span class="keyword">( </span><span class="default">$fp</span><span class="keyword">, </span><span class="default">$delim </span><span class="keyword">)<br />
+{<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$result </span><span class="keyword">= </span><span class="string">""</span><span class="keyword">;<br />
+&nbsp;&nbsp;&nbsp; while( !</span><span class="default">feof</span><span class="keyword">( </span><span class="default">$fp </span><span class="keyword">) )<br />
+&nbsp;&nbsp;&nbsp; {<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$tmp </span><span class="keyword">= </span><span class="default">fgetc</span><span class="keyword">( </span><span class="default">$fp </span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; if( </span><span class="default">$tmp </span><span class="keyword">== </span><span class="default">$delim </span><span class="keyword">)<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; return </span><span class="default">$result</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$result </span><span class="keyword">.= </span><span class="default">$tmp</span><span class="keyword">;<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; return </span><span class="default">$result</span><span class="keyword">;<br />
+}<br />
+<br />
+</span><span class="comment">// Example:<br />
+</span><span class="default">$fp </span><span class="keyword">= </span><span class="default">fopen</span><span class="keyword">(</span><span class="string">"/path/to/file.ext"</span><span class="keyword">, </span><span class="string">'r'</span><span class="keyword">);<br />
+while( !</span><span class="default">feof</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">) )<br />
+{<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$str </span><span class="keyword">= </span><span class="default">getline</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">, </span><span class="string">'|'</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; </span><span class="comment">// Do something with $str<br />
+</span><span class="keyword">}<br />
+</span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">);<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="77252"></a><div class="note">  <div class="votes">
+    <div id="Vu77252">
+    <a href="/manual/vote-note.php?id=77252&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd77252">
+    <a href="/manual/vote-note.php?id=77252&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V77252" title="100% like this...">
+    1
+    </div>
+  </div>
+  <a href="#77252" class="name">
+  <strong class="user"><em>Peter Schlaile</em></strong></a><a class="genanchor" href="#77252"> &para;</a><div class="date" title="2007-08-21 04:36"><strong>5 years ago</strong></div>
+  <div class="text" id="Hcom77252">
+<div class="phpcode"><code><span class="html">
+fscanf($file, "%s\n") isn't really a good substitution for fgets(), since it will stop parsing at the first whitespace and not at the end of line!<br />
+<br />
+(See the fscanf page for details on this)</span>
+</code></div>
+  </div>
+ </div>
+ <a name="63589"></a><div class="note">  <div class="votes">
+    <div id="Vu63589">
+    <a href="/manual/vote-note.php?id=63589&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd63589">
+    <a href="/manual/vote-note.php?id=63589&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V63589" title="100% like this...">
+    1
+    </div>
+  </div>
+  <a href="#63589" class="name"><strong class="user"><em>Anonymous</em></strong></a><a class="genanchor" href="#63589"> &para;</a><div class="date" title="2006-03-24 01:36"><strong>6 years ago</strong></div>
+  <div class="text" id="Hcom63589">
+<div class="phpcode"><code><span class="html">
+Macintosh line endings mentioned in docs refer to Mac OS Classic. You don't need this setting for interoperability with unixish OS X.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="43293"></a><div class="note">  <div class="votes">
+    <div id="Vu43293">
+    <a href="/manual/vote-note.php?id=43293&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd43293">
+    <a href="/manual/vote-note.php?id=43293&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V43293" title="100% like this...">
+    1
+    </div>
+  </div>
+  <a href="#43293" class="name">
+  <strong class="user"><em>timr</em></strong></a><a class="genanchor" href="#43293"> &para;</a><div class="date" title="2004-06-16 12:13"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom43293">
+<div class="phpcode"><code><span class="html">
+If you need to read an entire file into a string, use file_get_contents().&nbsp; fgets() is most useful when you need to process the lines of a file separately.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="92397"></a><div class="note">  <div class="votes">
+    <div id="Vu92397">
+    <a href="/manual/vote-note.php?id=92397&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd92397">
+    <a href="/manual/vote-note.php?id=92397&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V92397" title="75% like this...">
+    2
+    </div>
+  </div>
+  <a href="#92397" class="name">
+  <strong class="user"><em>afwxkat at gmail dot com</em></strong></a><a class="genanchor" href="#92397"> &para;</a><div class="date" title="2009-07-22 10:07"><strong>3 years ago</strong></div>
+  <div class="text" id="Hcom92397">
+<div class="phpcode"><code><span class="html">
+One thing I discovered with fgets, at least with PHP 5.1.6, is that you may have to use an IF statement to avoid your code running rampant (and possibly hanging the server).&nbsp; This can cause problems if you do not have root access on the server on which you are working.
+<br />
+<br />
+This is the code I have implemented ($F1 is an array):
+<br />
+<br />
+<span class="default">&lt;?php
+<br />
+&nbsp;&nbsp; </span><span class="keyword">if(</span><span class="default">$fh </span><span class="keyword">= </span><span class="default">fopen</span><span class="keyword">(</span><span class="string">"filename"</span><span class="keyword">,</span><span class="string">"r"</span><span class="keyword">)){
+<br />
+&nbsp;&nbsp; &nbsp;&nbsp; while (!</span><span class="default">feof</span><span class="keyword">(</span><span class="default">$fh</span><span class="keyword">)){
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$F1</span><span class="keyword">[] = </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$fh</span><span class="keyword">,</span><span class="default">9999</span><span class="keyword">);
+<br />
+&nbsp;&nbsp; &nbsp;&nbsp; }
+<br />
+&nbsp;&nbsp; &nbsp;&nbsp; </span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$fh</span><span class="keyword">);
+<br />
+&nbsp;&nbsp;&nbsp; }
+<br />
+</span><span class="default">?&gt;
+<br />
+</span>
+<br />
+I have noticed that without the IF statement, fgets seems to ignore when $fh is undefined (i.e., "filename" does not exist).&nbsp; If that happens, it will keep attempting to read from a nonexistent filehandle until the process can be administratively killed or the server hangs, whichever comes first.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="86319"></a><div class="note">  <div class="votes">
+    <div id="Vu86319">
+    <a href="/manual/vote-note.php?id=86319&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd86319">
+    <a href="/manual/vote-note.php?id=86319&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V86319" title="66% like this...">
+    2
+    </div>
+  </div>
+  <a href="#86319" class="name">
+  <strong class="user"><em>Leigh Purdie</em></strong></a><a class="genanchor" href="#86319"> &para;</a><div class="date" title="2008-10-12 04:14"><strong>4 years ago</strong></div>
+  <div class="text" id="Hcom86319">
+<div class="phpcode"><code><span class="html">
+For large files, consider using stream_get_line rather than fgets - it can make a significant difference.<br />
+<br />
+$ time yes "This is a test line" | head -1000000 | php -r '$fp=fopen("php://stdin","r"); while($line=stream_get_line($fp,65535,"\n")) { 1; } fclose($fp);'<br />
+<br />
+real&nbsp; &nbsp; 0m1.482s<br />
+user&nbsp; &nbsp; 0m1.616s<br />
+sys&nbsp; &nbsp; 0m0.152s<br />
+<br />
+$ time yes "This is a test line" | head -1000000 | php -r '$fp=fopen("php://stdin","r"); while($line=fgets($fp,65535)) { 1; } fclose($fp);'<br />
+<br />
+real&nbsp; &nbsp; 0m7.281s<br />
+user&nbsp; &nbsp; 0m7.392s<br />
+sys&nbsp; &nbsp; 0m0.136s</span>
+</code></div>
+  </div>
+ </div>
+ <a name="108685"></a><div class="note">  <div class="votes">
+    <div id="Vu108685">
+    <a href="/manual/vote-note.php?id=108685&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd108685">
+    <a href="/manual/vote-note.php?id=108685&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V108685" title="50% like this...">
+    0
+    </div>
+  </div>
+  <a href="#108685" class="name">
+  <strong class="user"><em>apardo at NOSPAM dot gmail dot com</em></strong></a><a class="genanchor" href="#108685"> &para;</a><div class="date" title="2012-05-17 09:03"><strong>9 months ago</strong></div>
+  <div class="text" id="Hcom108685">
+<div class="phpcode"><code><span class="html">
+This is a a simple function to detect end of line type for any file.<br />
+<br />
+<span class="default">&lt;?php <br />
+</span><span class="keyword">function </span><span class="default">detectEndOfLine</span><span class="keyword">(</span><span class="default">$file</span><span class="keyword">)<br />
+{<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$handle </span><span class="keyword">= @</span><span class="default">fopen</span><span class="keyword">(</span><span class="default">$file</span><span class="keyword">, </span><span class="string">"r"</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; if (</span><span class="default">$handle</span><span class="keyword">)<br />
+&nbsp;&nbsp;&nbsp; {<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$char</span><span class="keyword">=</span><span class="default">0</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; while (!</span><span class="default">$eol </span><span class="keyword">|| </span><span class="default">feof</span><span class="keyword">(</span><span class="default">$handle</span><span class="keyword">))<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$char</span><span class="keyword">++;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$line </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$handle</span><span class="keyword">, </span><span class="default">$char</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$eol </span><span class="keyword">= </span><span class="default">preg_match</span><span class="keyword">(</span><span class="string">"/(\r)+/"</span><span class="keyword">, </span><span class="default">$line</span><span class="keyword">)? </span><span class="string">"W" </span><span class="keyword">: </span><span class="string">""</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; if(!</span><span class="default">$eol</span><span class="keyword">) </span><span class="default">$eol </span><span class="keyword">= </span><span class="default">preg_match</span><span class="keyword">(</span><span class="string">"/(\n)+/"</span><span class="keyword">, </span><span class="default">$line</span><span class="keyword">)? </span><span class="string">"L" </span><span class="keyword">: </span><span class="string">""</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; }<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; return </span><span class="default">$eol</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$handle</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; }<br />
+}<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="80626"></a><div class="note">  <div class="votes">
+    <div id="Vu80626">
+    <a href="/manual/vote-note.php?id=80626&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd80626">
+    <a href="/manual/vote-note.php?id=80626&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V80626" title="50% like this...">
+    0
+    </div>
+  </div>
+  <a href="#80626" class="name">
+  <strong class="user"><em>Daniel Klein</em></strong></a><a class="genanchor" href="#80626"> &para;</a><div class="date" title="2008-01-25 12:47"><strong>5 years ago</strong></div>
+  <div class="text" id="Hcom80626">
+<div class="phpcode"><code><span class="html">
+The file pointer that fgets() uses can also be created with the proc_open() function and used with the stdout pipe created from the executed process.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="108419"></a><div class="note">  <div class="votes">
+    <div id="Vu108419">
+    <a href="/manual/vote-note.php?id=108419&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd108419">
+    <a href="/manual/vote-note.php?id=108419&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V108419" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#108419" class="name">
+  <strong class="user"><em>dan at censornet dot com</em></strong></a><a class="genanchor" href="#108419"> &para;</a><div class="date" title="2012-04-25 05:42"><strong>10 months ago</strong></div>
+  <div class="text" id="Hcom108419">
+<div class="phpcode"><code><span class="html">
+WARNING! fgets() and I presume any read() call to a file handle, e.g.<br />
+<br />
+&nbsp; while(!feof(STDIN)) {<br />
+&nbsp;&nbsp;&nbsp; $line = fgets(STDIN);<br />
+<br />
+&nbsp;&nbsp;&nbsp; ...do something useful with $line...<br />
+&nbsp; }<br />
+<br />
+...will result in a timeout after a default time of 60 seconds on my install. This behavior is non standard (not POSIX like) and seems to me to be a bug, or if not a major caveat which should be documented more clearly.<br />
+<br />
+After the timeout fgets() will return FALSE (=== FALSE), however, you can check to see if the stream (file handle) has really closed by checking feof($stream), e.g.<br />
+<br />
+&nbsp; while(!feof(STDIN)) {<br />
+&nbsp;&nbsp;&nbsp; $line = fgets(STDIN);<br />
+<br />
+&nbsp;&nbsp;&nbsp; if($line === FALSE) {<br />
+&nbsp;&nbsp; &nbsp;&nbsp; if(feof(STDIN)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; break;<br />
+&nbsp;&nbsp; &nbsp;&nbsp; }<br />
+&nbsp;&nbsp; &nbsp;&nbsp; continue;<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp; <br />
+&nbsp;&nbsp;&nbsp; ...do something useful with $line...<br />
+&nbsp; }</span>
+</code></div>
+  </div>
+ </div>
+ <a name="101963"></a><div class="note">  <div class="votes">
+    <div id="Vu101963">
+    <a href="/manual/vote-note.php?id=101963&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd101963">
+    <a href="/manual/vote-note.php?id=101963&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V101963" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#101963" class="name">
+  <strong class="user"><em>hgs at cs dot columbia dot edu</em></strong></a><a class="genanchor" href="#101963"> &para;</a><div class="date" title="2011-01-19 08:42"><strong>2 years ago</strong></div>
+  <div class="text" id="Hcom101963">
+<div class="phpcode"><code><span class="html">
+There seems to be an interaction between sockets and the auto_detect_line_endings setting that can cause rather peculiar behavior. Apparently, if the first line read from a socket is split across two TCP packets, the detector will look at the first TCP packet and determine that the system uses MacOS (\r) line endings, even though the LF is contained in the next packet. For example, this affected the PEAR Net_SMTP package, which would fail mysteriously for only some email servers.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="101332"></a><div class="note">  <div class="votes">
+    <div id="Vu101332">
+    <a href="/manual/vote-note.php?id=101332&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd101332">
+    <a href="/manual/vote-note.php?id=101332&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V101332" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#101332" class="name">
+  <strong class="user"><em>rembert at floating-point dot nl</em></strong></a><a class="genanchor" href="#101332"> &para;</a><div class="date" title="2010-12-09 11:39"><strong>2 years ago</strong></div>
+  <div class="text" id="Hcom101332">
+<div class="phpcode"><code><span class="html">
+To have fgets get data from a (for instance binary) string this might be of help:<br />
+<br />
+<span class="default">&lt;?php<br />
+$data </span><span class="keyword">= </span><span class="string">"the string data\nyou wish\nto parse"</span><span class="keyword">;<br />
+</span><span class="default">$fp </span><span class="keyword">= </span><span class="default">fopen</span><span class="keyword">(</span><span class="string">'data:text/plain,'</span><span class="keyword">. </span><span class="default">$data</span><span class="keyword">,</span><span class="string">'rb'</span><span class="keyword">);<br />
+while ( (</span><span class="default">$line </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">)) !== </span><span class="default">false</span><span class="keyword">) {<br />
+&nbsp; echo </span><span class="string">"</span><span class="default">$line</span><span class="string">&lt;br&gt;"</span><span class="keyword">;<br />
+}<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="98262"></a><div class="note">  <div class="votes">
+    <div id="Vu98262">
+    <a href="/manual/vote-note.php?id=98262&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd98262">
+    <a href="/manual/vote-note.php?id=98262&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V98262" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#98262" class="name">
+  <strong class="user"><em>lzsiga at freemail.c3.hu</em></strong></a><a class="genanchor" href="#98262"> &para;</a><div class="date" title="2010-06-04 04:32"><strong>2 years ago</strong></div>
+  <div class="text" id="Hcom98262">
+<div class="phpcode"><code><span class="html">
+Some people try to call feof before fgets, and then ignoring the return value of fgets. This method leads to processing value FALSE when reaching the end of file.<br />
+<br />
+Bad example:<br />
+<span class="default">&lt;?php<br />
+&nbsp;&nbsp;&nbsp; $f </span><span class="keyword">= </span><span class="default">fopen </span><span class="keyword">(</span><span class="string">"fgetstest.php"</span><span class="keyword">, </span><span class="string">"r"</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$ln</span><span class="keyword">= </span><span class="default">0</span><span class="keyword">;<br />
+&nbsp;&nbsp;&nbsp; while (! </span><span class="default">feof </span><span class="keyword">(</span><span class="default">$f</span><span class="keyword">)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$line</span><span class="keyword">= </span><span class="default">fgets </span><span class="keyword">(</span><span class="default">$f</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; ++</span><span class="default">$ln</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">printf </span><span class="keyword">(</span><span class="string">"%2d: "</span><span class="keyword">, </span><span class="default">$ln</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; if (</span><span class="default">$line</span><span class="keyword">===</span><span class="default">FALSE</span><span class="keyword">) print (</span><span class="string">"FALSE\n"</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; else print (</span><span class="default">$line</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">fclose </span><span class="keyword">(</span><span class="default">$f</span><span class="keyword">);<br />
+</span><span class="default">?&gt;<br />
+</span><br />
+Good example:<br />
+<span class="default">&lt;?php<br />
+&nbsp;&nbsp;&nbsp; $f </span><span class="keyword">= </span><span class="default">fopen </span><span class="keyword">(</span><span class="string">"fgetstest.php"</span><span class="keyword">, </span><span class="string">"r"</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$ln</span><span class="keyword">= </span><span class="default">0</span><span class="keyword">;<br />
+&nbsp;&nbsp;&nbsp; while (</span><span class="default">$line</span><span class="keyword">= </span><span class="default">fgets </span><span class="keyword">(</span><span class="default">$f</span><span class="keyword">)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; ++</span><span class="default">$ln</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">printf </span><span class="keyword">(</span><span class="string">"%2d: "</span><span class="keyword">, </span><span class="default">$ln</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; if (</span><span class="default">$line</span><span class="keyword">===</span><span class="default">FALSE</span><span class="keyword">) print (</span><span class="string">"FALSE\n"</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; else print (</span><span class="default">$line</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">fclose </span><span class="keyword">(</span><span class="default">$f</span><span class="keyword">);<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="89686"></a><div class="note">  <div class="votes">
+    <div id="Vu89686">
+    <a href="/manual/vote-note.php?id=89686&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd89686">
+    <a href="/manual/vote-note.php?id=89686&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V89686" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#89686" class="name">
+  <strong class="user"><em>fm</em></strong></a><a class="genanchor" href="#89686"> &para;</a><div class="date" title="2009-03-18 08:30"><strong>3 years ago</strong></div>
+  <div class="text" id="Hcom89686">
+<div class="phpcode"><code><span class="html">
+Here my solution for the \" problem [in CSV files.&nbsp; This function uses fgets(), not fgetcsv().]
+<br />
+<br />
+<span class="default">&lt;?php
+<br />
+<br />
+define</span><span class="keyword">(</span><span class="string">"CSV_Start"</span><span class="keyword">,&nbsp; &nbsp; </span><span class="default">0</span><span class="keyword">);
+<br />
+</span><span class="default">define</span><span class="keyword">(</span><span class="string">"CSV_Quoted"</span><span class="keyword">,&nbsp;&nbsp; </span><span class="default">1</span><span class="keyword">);
+<br />
+</span><span class="default">define</span><span class="keyword">(</span><span class="string">"CSV_Quoted2"</span><span class="keyword">,&nbsp; </span><span class="default">2</span><span class="keyword">);
+<br />
+</span><span class="default">define</span><span class="keyword">(</span><span class="string">"CSV_Unquoted"</span><span class="keyword">, </span><span class="default">3</span><span class="keyword">);
+<br />
+<br />
+function </span><span class="default">readCSV</span><span class="keyword">(</span><span class="default">$fh</span><span class="keyword">, </span><span class="default">$len</span><span class="keyword">, </span><span class="default">$delimiter </span><span class="keyword">= </span><span class="string">','</span><span class="keyword">, </span><span class="default">$enclosure </span><span class="keyword">= </span><span class="string">'"'</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$data </span><span class="keyword">= Array();
+<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$fildNr </span><span class="keyword">= </span><span class="default">0</span><span class="keyword">;
+<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$state </span><span class="keyword">= </span><span class="default">CSV_Start</span><span class="keyword">;
+<br />
+&nbsp;&nbsp;&nbsp; 
+<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$data</span><span class="keyword">[</span><span class="default">0</span><span class="keyword">] = </span><span class="string">""</span><span class="keyword">;
+<br />
+&nbsp;&nbsp;&nbsp; 
+<br />
+&nbsp;&nbsp;&nbsp; do {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$line </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$fh</span><span class="keyword">, </span><span class="default">$len</span><span class="keyword">);
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; for (</span><span class="default">$ix </span><span class="keyword">= </span><span class="default">0</span><span class="keyword">; </span><span class="default">$ix </span><span class="keyword">&lt; </span><span class="default">strlen</span><span class="keyword">(</span><span class="default">$line</span><span class="keyword">); </span><span class="default">$ix</span><span class="keyword">++) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; if (</span><span class="default">$line</span><span class="keyword">[</span><span class="default">$ix</span><span class="keyword">] == </span><span class="default">$delimiter</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; if (</span><span class="default">$state </span><span class="keyword">!= </span><span class="default">CSV_Quoted</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$fildNr</span><span class="keyword">++;
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$data</span><span class="keyword">[</span><span class="default">$fildNr</span><span class="keyword">] = </span><span class="string">""</span><span class="keyword">;
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$state </span><span class="keyword">= </span><span class="default">CSV_Start</span><span class="keyword">;
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; } else {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$data</span><span class="keyword">[</span><span class="default">$fildNr</span><span class="keyword">] .= </span><span class="default">$line</span><span class="keyword">[</span><span class="default">$ix</span><span class="keyword">];
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; }
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; } elseif (</span><span class="default">$line</span><span class="keyword">[</span><span class="default">$ix</span><span class="keyword">] == </span><span class="default">$enclosure</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; if (</span><span class="default">$state </span><span class="keyword">== </span><span class="default">CSV_Start</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$state </span><span class="keyword">= </span><span class="default">CSV_Quoted</span><span class="keyword">;
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; } elseif (</span><span class="default">$state </span><span class="keyword">== </span><span class="default">CSV_Quoted</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$state </span><span class="keyword">= </span><span class="default">CSV_Quoted2</span><span class="keyword">;
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; } elseif (</span><span class="default">$state </span><span class="keyword">== </span><span class="default">CSV_Quoted2</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$data</span><span class="keyword">[</span><span class="default">$fildNr</span><span class="keyword">] .= </span><span class="default">$line</span><span class="keyword">[</span><span class="default">$ix</span><span class="keyword">];
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$state </span><span class="keyword">= </span><span class="default">CSV_Quoted</span><span class="keyword">;
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; } else {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$data</span><span class="keyword">[</span><span class="default">$fildNr</span><span class="keyword">] .= </span><span class="default">$line</span><span class="keyword">[</span><span class="default">$ix</span><span class="keyword">];
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; }
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; } else {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$data</span><span class="keyword">[</span><span class="default">$fildNr</span><span class="keyword">] .= </span><span class="default">$line</span><span class="keyword">[</span><span class="default">$ix</span><span class="keyword">];
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; if (</span><span class="default">$state </span><span class="keyword">== </span><span class="default">CSV_Quoted2</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; echo </span><span class="string">"error"</span><span class="keyword">;
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; } elseif (</span><span class="default">$state </span><span class="keyword">== </span><span class="default">CSV_Start</span><span class="keyword">) {
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$state </span><span class="keyword">= </span><span class="default">CSV_Unquoted</span><span class="keyword">;
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; }
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; }
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; }
+<br />
+&nbsp;&nbsp;&nbsp; } while (</span><span class="default">$state </span><span class="keyword">== </span><span class="default">CSV_Quoted</span><span class="keyword">);
+<br />
+&nbsp;
+<br />
+&nbsp;&nbsp;&nbsp; return </span><span class="default">$data</span><span class="keyword">;&nbsp;&nbsp; 
+<br />
+}
+<br />
+<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="88439"></a><div class="note">  <div class="votes">
+    <div id="Vu88439">
+    <a href="/manual/vote-note.php?id=88439&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd88439">
+    <a href="/manual/vote-note.php?id=88439&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V88439" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#88439" class="name">
+  <strong class="user"><em>rahil123 at gmail dot com</em></strong></a><a class="genanchor" href="#88439"> &para;</a><div class="date" title="2009-01-23 08:01"><strong>4 years ago</strong></div>
+  <div class="text" id="Hcom88439">
+<div class="phpcode"><code><span class="html">
+As fgets uses char(10) LF as separator instead of ch(13) CF is caused me problem in using the read value(e.g. "XYZ\n"&nbsp; in system() command(e.g. system("XYZ\n option") was&nbsp; interpreted as only system("XYZ") due to \n). \n would have to striped out first.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="84061"></a><div class="note">  <div class="votes">
+    <div id="Vu84061">
+    <a href="/manual/vote-note.php?id=84061&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd84061">
+    <a href="/manual/vote-note.php?id=84061&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V84061" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#84061" class="name">
+  <strong class="user"><em>julian dot chappell at NOSPAM dot btopenworld dot com</em></strong></a><a class="genanchor" href="#84061"> &para;</a><div class="date" title="2008-06-25 01:14"><strong>4 years ago</strong></div>
+  <div class="text" id="Hcom84061">
+<div class="phpcode"><code><span class="html">
+Reply to Jerem's note. fgets terminating on chr(10) is correct.<br />
+<br />
+For the sake of you youngsters who have never heard of such things, the protocol for the CRLF pair dates back to the days where the input/output with computers was on teletype machines. A sort of glorified typewriter.<br />
+<br />
+chr(13) is a carriage return (CR), a command which physically moved the type head to the home position and chr(10) is a line feed (LF), which moved the paper up a line.<br />
+<br />
+The standard order in which these were used was CRLF - chr(13)/chr(10) - and both were needed for a line break. Use a CR chr(13) on its own and you would overwrite the beginning of the same line. (Incidentally, this was how bold type was done - print the same thing in the same place twice!). Use LF chr(10) on its own and you would continue printing at the current position across the page but dropped down a line. (Because the paper would move up but the print head remain where it is).<br />
+<br />
+Usage of this protocol has become somewhat sloppy and ill-defined these days for both printers and monitors. Some applications expect a line feed chr(10) on its own and simply assume a carriage return, others still use both but often without observing their distinctly separate functions. So much so that it may sometimes appear that they both do more or less the same thing, you only need one of them, and which to use is purely a matter of personal choice. Wrong on all counts!<br />
+<br />
+fgets terminating on a LF chr(10) is correct as it ensures that the preceding CR chr(13) is included in the line if it is present - and doesn't matter if it isn't. If fgets ever terminated on CR chr(13) as jerem suggests more often than not there would be a LF at the beginning of the next line read.<br />
+<br />
+The prefered use of chr(13) alone as a line break is risky. You might get away with it using your own applications and current printer, but if your file is for general release other people would see the entire output of your file printed on the same line if they use applications that interpret the CRLF pair more correctly. Not what you intended!</span>
+</code></div>
+  </div>
+ </div>
+ <a name="82607"></a><div class="note">  <div class="votes">
+    <div id="Vu82607">
+    <a href="/manual/vote-note.php?id=82607&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd82607">
+    <a href="/manual/vote-note.php?id=82607&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V82607" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#82607" class="name">
+  <strong class="user"><em>jerem-NoSpam-ified at live dot com</em></strong></a><a class="genanchor" href="#82607"> &para;</a><div class="date" title="2008-04-17 01:22"><strong>4 years ago</strong></div>
+  <div class="text" id="Hcom82607">
+<div class="phpcode"><code><span class="html">
+It's worth noting that this function only assumes chr(10) as a line break, but not chr(13). Personally, I prefer using chr(13) as a line break.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="78730"></a><div class="note">  <div class="votes">
+    <div id="Vu78730">
+    <a href="/manual/vote-note.php?id=78730&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd78730">
+    <a href="/manual/vote-note.php?id=78730&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V78730" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#78730" class="name">
+  <strong class="user"><em>david_sitller at blackbit dot de</em></strong></a><a class="genanchor" href="#78730"> &para;</a><div class="date" title="2007-10-24 10:32"><strong>5 years ago</strong></div>
+  <div class="text" id="Hcom78730">
+<div class="phpcode"><code><span class="html">
+If you use the example from the command-description, i recommend to trim the $buffer for further use. The line feed ist still at the end of the line. I saw this when using PHP CLI.<br />
+<br />
+Like this, checking a file-list for existing entries:<br />
+<br />
+$handle = fopen ("/tmp/files.txt", "r");<br />
+while (!feof($handle)) {<br />
+&nbsp;&nbsp;&nbsp; $buffer = fgets($handle, 4096);<br />
+&nbsp;&nbsp;&nbsp; if (file_exists(rtrim($filename,"\n"))) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; echo $buffer;<br />
+&nbsp;&nbsp;&nbsp; } else {<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; echo $buffer." has been removed."<br />
+}<br />
+fclose ($handle);</span>
+</code></div>
+  </div>
+ </div>
+ <a name="76329"></a><div class="note">  <div class="votes">
+    <div id="Vu76329">
+    <a href="/manual/vote-note.php?id=76329&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd76329">
+    <a href="/manual/vote-note.php?id=76329&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V76329" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#76329" class="name">
+  <strong class="user"><em>David at Weintraub.name</em></strong></a><a class="genanchor" href="#76329"> &para;</a><div class="date" title="2007-07-10 07:23"><strong>5 years ago</strong></div>
+  <div class="text" id="Hcom76329">
+<div class="phpcode"><code><span class="html">
+There's an error in the documentation:<br />
+<br />
+The file pointer must be valid, and must point to a file successfully opened by fopen() or fsockopen() (and not yet closed by fclose()).<br />
+<br />
+You should also add "popen" and "pclose" to the documentation. I'm a new PHP developer and went to verify that I could use "fgets" on commands that I used with "popen".</span>
+</code></div>
+  </div>
+ </div>
+ <a name="68849"></a><div class="note">  <div class="votes">
+    <div id="Vu68849">
+    <a href="/manual/vote-note.php?id=68849&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd68849">
+    <a href="/manual/vote-note.php?id=68849&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V68849" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#68849" class="name">
+  <strong class="user"><em>d at foo.com</em></strong></a><a class="genanchor" href="#68849"> &para;</a><div class="date" title="2006-08-12 06:03"><strong>6 years ago</strong></div>
+  <div class="text" id="Hcom68849">
+<div class="phpcode"><code><span class="html">
+For sockets, If you dont want fgets, fgetc etc... to block if theres no data there. set socket_set_blocking(handle,false); and socket_set_blocking(handle,true); to set it back again.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="68144"></a><div class="note">  <div class="votes">
+    <div id="Vu68144">
+    <a href="/manual/vote-note.php?id=68144&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd68144">
+    <a href="/manual/vote-note.php?id=68144&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V68144" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#68144" class="name">
+  <strong class="user"><em>svayn at yahoo dot com</em></strong></a><a class="genanchor" href="#68144"> &para;</a><div class="date" title="2006-07-14 07:21"><strong>6 years ago</strong></div>
+  <div class="text" id="Hcom68144">
+<div class="phpcode"><code><span class="html">
+fgets is SLOW for scanning through large files. If you don't have PHP 5, use fscanf($file, "%s\n") instead.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="66455"></a><div class="note">  <div class="votes">
+    <div id="Vu66455">
+    <a href="/manual/vote-note.php?id=66455&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd66455">
+    <a href="/manual/vote-note.php?id=66455&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V66455" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#66455" class="name">
+  <strong class="user"><em>sam dot bryan at montal dot com</em></strong></a><a class="genanchor" href="#66455"> &para;</a><div class="date" title="2006-05-22 07:09"><strong>6 years ago</strong></div>
+  <div class="text" id="Hcom66455">
+<div class="phpcode"><code><span class="html">
+An easy way to authenticate Windows Domain users from scripts running on a non-Windows or non-Domain box - pass the submitted username and password to an IMAP service on a Windows machine.<br />
+<br />
+<span class="default">&lt;?php<br />
+$server </span><span class="keyword">= </span><span class="string">'imapserver'</span><span class="keyword">;<br />
+</span><span class="default">$user </span><span class="keyword">= </span><span class="string">'user'</span><span class="keyword">;<br />
+</span><span class="default">$pass </span><span class="keyword">= </span><span class="string">'pass'</span><span class="keyword">;<br />
+<br />
+if (</span><span class="default">authIMAP</span><span class="keyword">(</span><span class="default">$user</span><span class="keyword">, </span><span class="default">$pass</span><span class="keyword">, </span><span class="default">$server</span><span class="keyword">)) {<br />
+&nbsp;&nbsp;&nbsp; echo </span><span class="string">"yay"</span><span class="keyword">;<br />
+} else {<br />
+&nbsp;&nbsp;&nbsp; echo </span><span class="string">"nay"</span><span class="keyword">;<br />
+}<br />
+<br />
+function </span><span class="default">authIMAP</span><span class="keyword">(</span><span class="default">$user</span><span class="keyword">, </span><span class="default">$pass</span><span class="keyword">, </span><span class="default">$server</span><span class="keyword">) {<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$connection </span><span class="keyword">= </span><span class="default">fsockopen</span><span class="keyword">(</span><span class="default">$server</span><span class="keyword">, </span><span class="default">143</span><span class="keyword">, </span><span class="default">$errno</span><span class="keyword">, </span><span class="default">$errstr</span><span class="keyword">, </span><span class="default">30</span><span class="keyword">);<br />
+<br />
+&nbsp;&nbsp;&nbsp; if(!</span><span class="default">$connection</span><span class="keyword">) return </span><span class="default">false</span><span class="keyword">;<br />
+<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$output </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$connection</span><span class="keyword">, </span><span class="default">128</span><span class="keyword">); </span><span class="comment">// banner<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">fputs</span><span class="keyword">(</span><span class="default">$connection</span><span class="keyword">, </span><span class="string">"1 login </span><span class="default">$user</span><span class="string"> </span><span class="default">$pass</span><span class="string">\r\n"</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$output </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$connection</span><span class="keyword">, </span><span class="default">128</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">fputs</span><span class="keyword">(</span><span class="default">$connection</span><span class="keyword">, </span><span class="string">"2 logout\r\n"</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$connection</span><span class="keyword">);<br />
+<br />
+&nbsp;&nbsp;&nbsp; if (</span><span class="default">substr</span><span class="keyword">(</span><span class="default">$output</span><span class="keyword">, </span><span class="default">0</span><span class="keyword">, </span><span class="default">4</span><span class="keyword">) == </span><span class="string">'1 OK'</span><span class="keyword">) return </span><span class="default">true</span><span class="keyword">;<br />
+<br />
+&nbsp;&nbsp;&nbsp; return </span><span class="default">false</span><span class="keyword">;<br />
+}<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="62774"></a><div class="note">  <div class="votes">
+    <div id="Vu62774">
+    <a href="/manual/vote-note.php?id=62774&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd62774">
+    <a href="/manual/vote-note.php?id=62774&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V62774" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#62774" class="name">
+  <strong class="user"><em>tavernadelleidee[italy]</em></strong></a><a class="genanchor" href="#62774"> &para;</a><div class="date" title="2006-03-08 07:44"><strong>7 years ago</strong></div>
+  <div class="text" id="Hcom62774">
+<div class="phpcode"><code><span class="html">
+I think that the quickest way of read a (long) file with the rows in&nbsp; reverse order is<br />
+<br />
+<span class="default">&lt;?php<br />
+$myfile </span><span class="keyword">= </span><span class="string">'myfile.txt'</span><span class="keyword">;<br />
+</span><span class="default">$command </span><span class="keyword">= </span><span class="string">"tac </span><span class="default">$myfile</span><span class="string"> &gt; /tmp/myfilereversed.txt"</span><span class="keyword">;<br />
+</span><span class="default">passthru</span><span class="keyword">(</span><span class="default">$command</span><span class="keyword">);<br />
+</span><span class="default">$ic </span><span class="keyword">= </span><span class="default">0</span><span class="keyword">;<br />
+</span><span class="default">$ic_max </span><span class="keyword">= </span><span class="default">100</span><span class="keyword">;&nbsp; </span><span class="comment">// stops after this number of rows<br />
+</span><span class="default">$handle </span><span class="keyword">= </span><span class="default">fopen</span><span class="keyword">(</span><span class="string">"/tmp/myfilereversed.txt"</span><span class="keyword">, </span><span class="string">"r"</span><span class="keyword">);<br />
+while (!</span><span class="default">feof</span><span class="keyword">(</span><span class="default">$handle</span><span class="keyword">) &amp;&amp; ++</span><span class="default">$ic</span><span class="keyword">&lt;=</span><span class="default">$ic_max</span><span class="keyword">) {<br />
+&nbsp;&nbsp; </span><span class="default">$buffer </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$handle</span><span class="keyword">, </span><span class="default">4096</span><span class="keyword">);<br />
+&nbsp;&nbsp; echo </span><span class="default">$buffer</span><span class="keyword">.</span><span class="string">"&lt;br&gt;"</span><span class="keyword">;<br />
+}<br />
+</span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$handle</span><span class="keyword">);<br />
+</span><span class="default">?&gt;<br />
+</span><br />
+It echos the rows while it is reading the file so it is good for long files like logs.<br />
+<br />
+Borgonovo</span>
+</code></div>
+  </div>
+ </div>
+ <a name="60363"></a><div class="note">  <div class="votes">
+    <div id="Vu60363">
+    <a href="/manual/vote-note.php?id=60363&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd60363">
+    <a href="/manual/vote-note.php?id=60363&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V60363" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#60363" class="name">
+  <strong class="user"><em>ecvej</em></strong></a><a class="genanchor" href="#60363"> &para;</a><div class="date" title="2006-01-04 05:20"><strong>7 years ago</strong></div>
+  <div class="text" id="Hcom60363">
+<div class="phpcode"><code><span class="html">
+I would have expected the same behaviour from these bits of code:-<br />
+<br />
+<span class="default">&lt;?php<br />
+<br />
+</span><span class="comment">/*This times out correctly*/<br />
+</span><span class="keyword">while (!</span><span class="default">feof</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">)) {<br />
+&nbsp;&nbsp;&nbsp; echo </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">);<br />
+}<br />
+<br />
+</span><span class="comment">/*This times out before eof*/<br />
+</span><span class="keyword">while (</span><span class="default">$line</span><span class="keyword">=</span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">)) {<br />
+&nbsp;&nbsp;&nbsp; echo </span><span class="default">$line</span><span class="keyword">;<br />
+}<br />
+<br />
+</span><span class="comment">/*A reasonable fix is to set a long timeout*/<br />
+</span><span class="default">stream_set_timeout</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">, </span><span class="default">180</span><span class="keyword">);<br />
+while (</span><span class="default">$line</span><span class="keyword">=</span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$fp</span><span class="keyword">)) {<br />
+&nbsp;&nbsp;&nbsp; echo </span><span class="default">$line</span><span class="keyword">;<br />
+}<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="59277"></a><div class="note">  <div class="votes">
+    <div id="Vu59277">
+    <a href="/manual/vote-note.php?id=59277&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd59277">
+    <a href="/manual/vote-note.php?id=59277&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V59277" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#59277" class="name">
+  <strong class="user"><em>kpeters AT-AT monolithss DEE OH TEE com</em></strong></a><a class="genanchor" href="#59277"> &para;</a><div class="date" title="2005-11-30 09:51"><strong>7 years ago</strong></div>
+  <div class="text" id="Hcom59277">
+<div class="phpcode"><code><span class="html">
+It appears that fgets() will return FALSE on EOF (before feof has a chance to read it), so this code will throw an exception:<br />
+<br />
+while (!feof($fh)) {<br />
+&nbsp; $line = fgets($fh);<br />
+&nbsp; if ($line === false) {<br />
+&nbsp;&nbsp;&nbsp; throw new Exception("File read error");<br />
+&nbsp; }<br />
+}</span>
+</code></div>
+  </div>
+ </div>
+ <a name="48820"></a><div class="note">  <div class="votes">
+    <div id="Vu48820">
+    <a href="/manual/vote-note.php?id=48820&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd48820">
+    <a href="/manual/vote-note.php?id=48820&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V48820" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#48820" class="name">
+  <strong class="user"><em>dandrews OVER AT 3dohio DOT com</em></strong></a><a class="genanchor" href="#48820"> &para;</a><div class="date" title="2005-01-07 03:11"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom48820">
+<div class="phpcode"><code><span class="html">
+Saku's example may also be used like this:<br />
+<br />
+<span class="default">&lt;?php<br />
+&nbsp;</span><span class="keyword">@ </span><span class="default">$pointer </span><span class="keyword">= </span><span class="default">fopen</span><span class="keyword">(</span><span class="string">"</span><span class="default">$DOCUMENT_ROOT</span><span class="string">/foo.txt"</span><span class="keyword">, </span><span class="string">"r"</span><span class="keyword">); </span><span class="comment">// the @ suppresses errors so you have to test the pointer for existence<br />
+&nbsp;&nbsp; </span><span class="keyword">if (</span><span class="default">$pointer</span><span class="keyword">) {<br />
+&nbsp;&nbsp; &nbsp; while (!</span><span class="default">feof</span><span class="keyword">(</span><span class="default">$pointer</span><span class="keyword">)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$preTEXT </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$pointer</span><span class="keyword">, </span><span class="default">999</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="comment">// $TEXT .= $preTEXT;&nbsp; this is better for a string<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$ATEXT</span><span class="keyword">[</span><span class="default">$I</span><span class="keyword">] = </span><span class="default">$preTEXT</span><span class="keyword">;&nbsp; </span><span class="comment">// maybe better as an array<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$I</span><span class="keyword">++;<br />
+&nbsp;&nbsp; &nbsp; }<br />
+&nbsp;&nbsp; &nbsp; </span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$pointer</span><span class="keyword">);<br />
+&nbsp;&nbsp; }<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="47137"></a><div class="note">  <div class="votes">
+    <div id="Vu47137">
+    <a href="/manual/vote-note.php?id=47137&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd47137">
+    <a href="/manual/vote-note.php?id=47137&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V47137" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#47137" class="name">
+  <strong class="user"><em>lelkesa</em></strong></a><a class="genanchor" href="#47137"> &para;</a><div class="date" title="2004-11-03 06:54"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom47137">
+<div class="phpcode"><code><span class="html">
+Note that - afaik - fgets reads a line until it reaches a line feed (\\n). Carriage returns (\\r) aren't processed as line endings.<br />
+However, nl2br insterts a &lt;br /&gt; tag before carriage returns as well.<br />
+This is useful (but not nice - I must admit) when you want to store a more lines in one.<br />
+<span class="default">&lt;?php<br />
+</span><span class="keyword">function </span><span class="default">write_lines</span><span class="keyword">(</span><span class="default">$text</span><span class="keyword">) {<br />
+&nbsp; </span><span class="default">$file </span><span class="keyword">= </span><span class="default">fopen</span><span class="keyword">(</span><span class="string">'data.txt'</span><span class="keyword">, </span><span class="string">'a'</span><span class="keyword">);<br />
+&nbsp; </span><span class="default">fwrite</span><span class="keyword">(</span><span class="default">$file</span><span class="keyword">, </span><span class="default">str_replace</span><span class="keyword">(</span><span class="string">"\n"</span><span class="keyword">, </span><span class="string">' '</span><span class="keyword">, </span><span class="default">$text</span><span class="keyword">).</span><span class="string">"\n"</span><span class="keyword">);<br />
+&nbsp; </span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$file</span><span class="keyword">);<br />
+}<br />
+<br />
+function </span><span class="default">read_all</span><span class="keyword">() {<br />
+&nbsp; </span><span class="default">$file </span><span class="keyword">= </span><span class="default">fopen</span><span class="keyword">(</span><span class="string">'data.txt'</span><span class="keyword">, </span><span class="string">'r'</span><span class="keyword">);<br />
+&nbsp; while (!</span><span class="default">feof</span><span class="keyword">(</span><span class="default">$file</span><span class="keyword">)) {<br />
+&nbsp;&nbsp;&nbsp; </span><span class="default">$line </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$file</span><span class="keyword">);<br />
+&nbsp;&nbsp;&nbsp; echo </span><span class="string">'&lt;u&gt;Section&lt;/u&gt;&lt;p&gt;nl2br'</span><span class="keyword">.(</span><span class="default">$line</span><span class="keyword">).</span><span class="string">'&lt;/p&gt;'</span><span class="keyword">;<br />
+&nbsp; }<br />
+&nbsp; </span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$file</span><span class="keyword">);<br />
+}<br />
+</span><span class="default">?&gt;<br />
+</span><br />
+Try it.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="45406"></a><div class="note">  <div class="votes">
+    <div id="Vu45406">
+    <a href="/manual/vote-note.php?id=45406&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd45406">
+    <a href="/manual/vote-note.php?id=45406&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V45406" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#45406" class="name"><strong class="user"><em>Anonymous</em></strong></a><a class="genanchor" href="#45406"> &para;</a><div class="date" title="2004-09-05 08:05"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom45406">
+<div class="phpcode"><code><span class="html">
+If you need to simulate an un-buffered fgets so that stdin doesnt hang there waiting for some input (i.e. it reads only if there is data available) use this :<br />
+<span class="default">&lt;?php<br />
+<br />
+&nbsp;&nbsp;&nbsp; </span><span class="keyword">function </span><span class="default">fgets_u</span><span class="keyword">(</span><span class="default">$pStdn</span><span class="keyword">) {<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; </span><span class="default">$pArr </span><span class="keyword">= array(</span><span class="default">$pStdn</span><span class="keyword">);<br />
+<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; if (</span><span class="default">false </span><span class="keyword">=== (</span><span class="default">$num_changed_streams </span><span class="keyword">= </span><span class="default">stream_select</span><span class="keyword">(</span><span class="default">$pArr</span><span class="keyword">, </span><span class="default">$write </span><span class="keyword">= </span><span class="default">NULL</span><span class="keyword">, </span><span class="default">$except </span><span class="keyword">= </span><span class="default">NULL</span><span class="keyword">, </span><span class="default">0</span><span class="keyword">))) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; print(</span><span class="string">"\$ 001 Socket Error : UNABLE TO WATCH STDIN.\n"</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; return </span><span class="default">FALSE</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; } elseif (</span><span class="default">$num_changed_streams </span><span class="keyword">&gt; </span><span class="default">0</span><span class="keyword">) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; return </span><span class="default">trim</span><span class="keyword">(</span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$pStdn</span><span class="keyword">, </span><span class="default">1024</span><span class="keyword">));<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; }<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; }<br />
+<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div>
+ <a name="40127"></a><div class="note">  <div class="votes">
+    <div id="Vu40127">
+    <a href="/manual/vote-note.php?id=40127&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd40127">
+    <a href="/manual/vote-note.php?id=40127&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V40127" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#40127" class="name">
+  <strong class="user"><em>Pete</em></strong></a><a class="genanchor" href="#40127"> &para;</a><div class="date" title="2004-02-22 08:35"><strong>9 years ago</strong></div>
+  <div class="text" id="Hcom40127">
+<div class="phpcode"><code><span class="html">
+If you have troubles reading binary data with versions &lt;= 4.3.2 then upgrade to 4.3.3<br />
+The binary safe implementation seems to have had bugs which were fixed in 4.3.3</span>
+</code></div>
+  </div>
+ </div>
+ <a name="37793"></a><div class="note">  <div class="votes">
+    <div id="Vu37793">
+    <a href="/manual/vote-note.php?id=37793&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd37793">
+    <a href="/manual/vote-note.php?id=37793&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V37793" title="no votes...">
+    0
+    </div>
+  </div>
+  <a href="#37793" class="name">
+  <strong class="user"><em>guntars at datapro dot lv</em></strong></a><a class="genanchor" href="#37793"> &para;</a><div class="date" title="2003-11-26 09:24"><strong>9 years ago</strong></div>
+  <div class="text" id="Hcom37793">
+<div class="phpcode"><code><span class="html">
+For all those people struggling with Macintosh conversions, since PHP 4.3 there is a new runtime setting available:
+<br />
+auto_detect_line_endings boolean 
+<br />
+<br />
+When turned on, PHP will examine the data read by fgets() and file() to see if it is using Unix, MS-Dos or Macintosh line-ending conventions. 
+<br />
+<br />
+This enables PHP to interoperate with Macintosh systems, but defaults to Off, as there is a very small performance penalty when detecting the EOL conventions for the first line, and also because people using carriage-returns as item separators under Unix systems would experience non-backwards-compatible behaviour.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="92342"></a><div class="note">  <div class="votes">
+    <div id="Vu92342">
+    <a href="/manual/vote-note.php?id=92342&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd92342">
+    <a href="/manual/vote-note.php?id=92342&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V92342" title="0% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#92342" class="name">
+  <strong class="user"><em>bens at effortlessis dot com</em></strong></a><a class="genanchor" href="#92342"> &para;</a><div class="date" title="2009-07-20 03:49"><strong>3 years ago</strong></div>
+  <div class="text" id="Hcom92342">
+<div class="phpcode"><code><span class="html">
+As I noted in a comment on stream_get_line() page, fgets is *not* necessarily slower than stream_get_line(). In my case, it's actually ~2.5 times slower. (25 seconds vs 10 seconds) <br />
+<br />
+Also, stream_get_line() doesn't return the limiter. Since you pass both a maximum string length, you have no way of knowing whether or not the limiter was present in the original file, other than the 1 in 1024 chance that the line (with limiter) is exactly 1024 characters long, and appending the limiter (EG: "\n") in the case where the line is less than 1024 chars. <br />
+<br />
+This latter bit compromises data integrity, stream_get_line() should probably not be used for all but very special cases.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="84803"></a><div class="note">  <div class="votes">
+    <div id="Vu84803">
+    <a href="/manual/vote-note.php?id=84803&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd84803">
+    <a href="/manual/vote-note.php?id=84803&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V84803" title="0% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#84803" class="name">
+  <strong class="user"><em>soapergem at gmail dot com</em></strong></a><a class="genanchor" href="#84803"> &para;</a><div class="date" title="2008-07-30 04:49"><strong>4 years ago</strong></div>
+  <div class="text" id="Hcom84803">
+<div class="phpcode"><code><span class="html">
+I ran into an issue that took me forever to finally figure out today, and I wanted to post my findings here in case anyone else ever runs into the same thing. I had tried to open a connection using fsockopen to my own server, send some data with fwrite, and then read the response with fgets. The data I sent over included the session ID, which was to be loaded by the page receiving it. Keep in mind that both the sender and receiver URLs were on my same server, and both tried to use the same session ID.<br />
+<br />
+I found that I could do the fwrite part just fine, but that fgets would lock up indefinitely, ignoring any timeout I had set with fsockopen (but thankfully still obeying the max_execution_time limit).<br />
+<br />
+The problem was that while the sending page was trying to do the fgets, it still had the session open. But the receiving page needed session data before it was willing to output anything, thereby creating a deadlock.<br />
+<br />
+The solution I found was to call session_write_close() just prior to sending the request in the sender page, thereby granting access for the receiver to open up the session variables it needed.</span>
+</code></div>
+  </div>
+ </div>
+ <a name="59393"></a><div class="note">  <div class="votes">
+    <div id="Vu59393">
+    <a href="/manual/vote-note.php?id=59393&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd59393">
+    <a href="/manual/vote-note.php?id=59393&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V59393" title="0% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#59393" class="name">
+  <strong class="user"><em>hackajar &lt;matt&gt; yahoo &lt;trot&gt; com</em></strong></a><a class="genanchor" href="#59393"> &para;</a><div class="date" title="2005-12-05 04:17"><strong>7 years ago</strong></div>
+  <div class="text" id="Hcom59393">
+<div class="phpcode"><code><span class="html">
+When working with VERY large files, php tends to fall over sideways and die.&nbsp; <br />
+<br />
+Here is a neat way to pull chunks out of a file very fast and won't stop in mid line, but rater at end of last known line.&nbsp; It pulled a 30+ million line 900meg file through in ~ 24 seconds.<br />
+<br />
+NOTE: <br />
+$buf just hold current chunk of data to work with.&nbsp; If you try "$buf .=" (note 'dot' in from of '=') to append $buff, script will come to grinding crawl around 100megs of data, so work with current data then move on!<br />
+<br />
+//File to be opened<br />
+$file = "huge.file";<br />
+//Open file (DON'T USE a+ pointer will be wrong!)<br />
+$fp = fopen($file, 'r');<br />
+//Read 16meg chunks<br />
+$read = 16777216;<br />
+//\n Marker<br />
+$part = 0;<br />
+<br />
+while(!feof($fp)) {<br />
+&nbsp;&nbsp;&nbsp; $rbuf = fread($fp, $read);<br />
+&nbsp;&nbsp;&nbsp; for($i=$read;$i &gt; 0 || $n == chr(10);$i--) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; $n=substr($rbuf, $i, 1);<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; if($n == chr(10))break;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; //If we are at the end of the file, just grab the rest and stop loop<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; elseif(feof($fp)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; $i = $read;<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; $buf = substr($rbuf, 0, $i+1);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; break;<br />
+&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; //This is the buffer we want to do stuff with, maybe thow to a function?<br />
+&nbsp;&nbsp;&nbsp; $buf = substr($rbuf, 0, $i+1);<br />
+&nbsp;&nbsp;&nbsp; //Point marker back to last \n point<br />
+&nbsp;&nbsp;&nbsp; $part = ftell($fp)-($read-($i+1));<br />
+&nbsp;&nbsp;&nbsp; fseek($fp, $part);<br />
+}<br />
+fclose($fp);</span>
+</code></div>
+  </div>
+ </div>
+ <a name="42964"></a><div class="note">  <div class="votes">
+    <div id="Vu42964">
+    <a href="/manual/vote-note.php?id=42964&page=function.fgets&vote=up" title="Vote up!" class="usernotes-voteu">up</a>
+    </div>
+    <div id="Vd42964">
+    <a href="/manual/vote-note.php?id=42964&page=function.fgets&vote=down" title="Vote down!" class="usernotes-voted">down</a>
+    </div>
+    <div class="tally" id="V42964" title="0% like this...">
+    -1
+    </div>
+  </div>
+  <a href="#42964" class="name">
+  <strong class="user"><em>Saku</em></strong></a><a class="genanchor" href="#42964"> &para;</a><div class="date" title="2004-06-04 10:47"><strong>8 years ago</strong></div>
+  <div class="text" id="Hcom42964">
+<div class="phpcode"><code><span class="html">
+As a beginner I would have liked to see "how to read a file into a string for use later and not only how to directly echo the fgets() result. This is what I derived:<br />
+<span class="default">&lt;?php<br />
+&nbsp;</span><span class="keyword">@ </span><span class="default">$pointer </span><span class="keyword">= </span><span class="default">fopen</span><span class="keyword">(</span><span class="string">"</span><span class="default">$DOCUMENT_ROOT</span><span class="string">/foo.txt"</span><span class="keyword">, </span><span class="string">"r"</span><span class="keyword">); </span><span class="comment">// the @ suppresses errors so you have to test the pointer for existence<br />
+&nbsp;&nbsp; </span><span class="keyword">if (</span><span class="default">$pointer</span><span class="keyword">) {<br />
+&nbsp;&nbsp; &nbsp;&nbsp; while (!</span><span class="default">feof</span><span class="keyword">(</span><span class="default">$pointer</span><span class="keyword">)) {<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$preTEXT </span><span class="keyword">= </span><span class="default">fgets</span><span class="keyword">(</span><span class="default">$pointer</span><span class="keyword">, </span><span class="default">999</span><span class="keyword">);<br />
+&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="default">$TEXT </span><span class="keyword">= </span><span class="default">$TEXT </span><span class="keyword">. </span><span class="default">$preTEXT</span><span class="keyword">;<br />
+&nbsp;&nbsp; &nbsp;&nbsp; }<br />
+&nbsp;&nbsp; &nbsp;&nbsp; </span><span class="default">fclose</span><span class="keyword">(</span><span class="default">$pointer</span><span class="keyword">);<br />
+&nbsp;&nbsp; }<br />
+</span><span class="default">?&gt;</span>
+</span>
+</code></div>
+  </div>
+ </div></div>
+
+ <div class="foot"><a href="/manual/add-note.php?sect=function.fgets&amp;redirect=http://www.php.net/manual/zh/function.fgets.php"><img src="http://static.php.net/www.php.net/images/notes-add.gif" alt="add a note" width="13" height="13" class="middle" /></a> <small><a href="/manual/add-note.php?sect=function.fgets&amp;redirect=http://www.php.net/manual/zh/function.fgets.php">add a note</a></small></div>
+</div><br />
+ </div>
+ <div class="cleaner">&nbsp;</div>
+</div>
+
+<div id="footnav">
+   <a href="/source.php?url=/manual/zh/function.fgets.php">show source</a> |
+ <a href="/credits.php">credits</a> |
+ <a href="/stats/">stats</a> |
+ <a href="/sitemap.php">sitemap</a> |
+ <a href="/contact.php">contact</a> |
+ <a href="/contact.php#ads">advertising</a> |
+ <a href="/mirrors.php">mirror sites</a>
+</div>
+
+<div id="pagefooter">
+ <div id="copyright">
+  <a href="/copyright.php">Copyright &copy; 2001-2013 The PHP Group</a><br />
+  All rights reserved.
+ </div>
+
+ <div id="thismirror">
+  <a href="/mirror.php">This mirror</a> generously provided by:
+  <a href="http://developer.yahoo.com/">Yahoo! Inc.</a><br />
+  Last updated: Thu Mar 14 07:21:13 2013 PDT
+ </div>
+</div>
+<!--[if IE 6]>
+<script type="text/javascript">
+    /*Load jQuery if not already loaded*/ if(typeof jQuery == 'undefined'){ document.write("<script type=\"text/javascript\"   src=\"//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js\"></"+"script>"); var __noconflict = true; }
+    var IE6UPDATE_OPTIONS = {
+        icons_path: "/ie6update/images/"
+    }
+</script>
+<script type="text/javascript" src="/ie6update/ie6update.js"></script>
+<![endif]-->
+</body>
+</html>
