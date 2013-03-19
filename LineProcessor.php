@@ -7,13 +7,18 @@
 */
 class LineProcessor
 {
-    public $lineNo;
-    public $state;
-    private $lines;
-    private $curNodeTag;
-    private $domPath;
+    protected $lineNo;
+    protected $curLine;
+    protected $lastLine;
+    protected $lines;
+    protected $state;
+    protected $curNodeTag;
+    protected $domPath;
+    protected $filePath;
 
-    function __construct()
+    private $hasChanged;
+
+    public function __construct()
     {
         $this->lineNo = 0;
         $this->domPath = array();
@@ -24,6 +29,25 @@ class LineProcessor
         return $line;
     }
 
+    protected function line($i = 0, $str = null)
+    {
+        if ($i < 0) {
+            throw new Exception("must be positive: $i", 1);
+        }
+        if ($str !== null) {
+            // set
+            if ($i > 0) {
+                $this->lines[count($this->lines) - $i] = $str;
+            }
+        }
+
+        // get
+        if ($i == 0) {
+            return $this->curLine;
+        }
+        return $this->lines[count($this->lines) - $i];
+    }
+
     private function processLine($line)
     {
         if (preg_match('/\<(\w+?)(\s|>|\/>)/', $line, $matches)) {
@@ -31,16 +55,19 @@ class LineProcessor
             $this->curNodeTag = $tag;
             $this->domPath[] = $tag;
         }
-        print_r($this->domPath);
         $r = $this->everyLine($line);
         if ($r === false) {
             return false;
         } elseif (is_string($r)) {
-            $this->lastLine = $r;
+            $this->lines[] = $this->lastLine = $r;
+            if (strcmp($r, $line) !== 0) {
+                $this->hasChanged = true;
+            }
+        } else {
+            $this->lines[] = $this->lastLine = $line;
         }
         if (preg_match('/.*\<\/(\w+)\>/', $line, $matches)) {
             $tag = $matches[1];
-            echo "$tag end\n";
             if ($this->domPath[count($this->domPath)-1] == $tag) {
                 array_pop($this->domPath);
             }
@@ -49,14 +76,19 @@ class LineProcessor
 
     public function processFile($fname)
     {
-        echo "processing file: $fname\n";
+        // echo "processing file: $fname\n";
         if (!file_exists($fname)) {
             throw new Exception("file not exists: $fname", 1);
         }
+
+        $this->hasChanged = false;
+        $this->lineNo = 0;
+        $this->lines = array();
+
         $f = fopen($fname, 'r');
         while (false !== ($this->curLine = $line = fgets($f, 4096))) {
             $this->lineNo++;
-            echo "$this->lineNo: $line";
+            // echo "$this->lineNo: $line";
             if (false === $this->processLine($line)) {
                 fclose($f);
                 return;
@@ -66,6 +98,19 @@ class LineProcessor
             throw new Exception("unexpected fgets() fail", 1);
         }
         fclose($f);
+
+        if ($this->hasChanged) {
+            echo "file has changed: $fname\n";
+            $f = fopen($fname, 'w');
+            foreach ($this->lines as $line) {
+                $r = fwrite($f, $line);
+                if ($r === false) {
+                    fclose($f);
+                    throw new Exception("file write error", 1);
+                }
+            }
+            fclose($f);
+        }
     }
 
     public function processDir($dirStr)
@@ -82,9 +127,7 @@ class LineProcessor
         }
         while (false !== ($fname = readdir($dir))) {
             $fpath = $dirStr.DIRECTORY_SEPARATOR.$fname;
-            // echo "$fname\n";
             if (in_array($fname, array('.', '..', '.git', '.svn', '.DS_Store'))) {
-                // echo "skip $fpath\n";
                 continue;
             }
             // echo "$fpath\n";
@@ -93,18 +136,13 @@ class LineProcessor
                 $this->processDir($fpath);
             } elseif (preg_match('/\.phtml$/', $fname) && !preg_match('/\.bak\./', $fname)) {
                 // echo "$fpath is a file\n";
+                $this->filePath = $fpath;
                 $changes = $this->processFile($fpath);
                 if ($changes) {
-                    wecho("$fpath changed");
+                    echo("$fpath changed\n");
                 }
             }
         }
-    }
-
-    private function wecho($str = '')
-    {
-        $str = str_replace('\\', '/', $str);
-        echo iconv('utf-8', 'gbk', $str), PHP_EOL;
     }
 
     private function lead_spaces($line)
