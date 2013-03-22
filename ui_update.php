@@ -182,164 +182,19 @@ function up_ui_f($fname)
             $changes[] = $i;
         }
 
-        if (preg_match('/<div class="conditions" role="advancedSearchConditions">/', $line)) {
-            // wecho("$url line: $i 高级搜索条件 需隐藏");
-        }
-
-        // 操作按钮
-        if (preg_match('/<td class="opt">/', $line)) {
-            // wecho("$url line: $i 操作按钮");
-            $last_state = 'td_opt';
-            $acnt = 0;
-            $with_php = 0;
-            $i_td = $i;
-            $last_line = $line;
-        }
-
-        if (preg_match('/详情/', $line) 
-            && $last_state == 'td_opt' 
-            && preg_match('/<td class="opt">/', $last_line)
-            && !preg_match('/demand-agreement/', $line)
-            && preg_match('/loadModule\(this/', $line)
-            && !preg_match('/url\(/', $line)
-            ) {
-            $last_state = 'opt_2a';
-            $lead_spaces = lead_spaces($line);
-            $newlines[] = $lead_spaces.'<span class="opt-container" role="moreOptMenu">';
-            $newlines[] = $lead_spaces.'    <span class="moreopt" role="wrap">';
-            $newlines[] = $lead_spaces.'         <span class="moreopt-inner">';
-            $line = preg_replace('/href="/', 'class="tit" role="tit" href="', $line);
-            $line = preg_replace('/>详情</', '><em>详情<i></i></em><', $line);
-            $changes[] = $i;
-        }
-        if ($last_state == 'opt_2a' && preg_match('/审核/', $line)) {
-            $newlines[] = $lead_spaces.'             <div class="sub" role="sub">';
-            $changes[] = $i;
-            $line = preg_replace('/>审核</', '><span><em>审核</em></span><', $line);
-            $changes[] = $i;
-        }
-
-        if (preg_match('/<a href="###">删除|<a href="###">查看|<a href="###">下载/', $line)
-            || (preg_match('/a.+下载/', $line) && preg_match('/a.+查看/', $newlines[count($newlines)-1]))
-        ) {
-            $last_state = null;
-        }
-        if (preg_match('/<span class=".*role="moreOptMenu">/', $line)) {
-            $last_state = null;
-        }
-        if ($last_state == 'td_opt' && preg_match('/<a.+?>/', $line)) {
-            $acnt++;
-        }
-        if ($last_state == 'td_opt' && preg_match('/^\s*<\?php/', $line)) {
-            $with_php = 1;
-        }
-
-        // 审核
-        if ($last_state == 'td_opt' && preg_match('/dictionary.*详情/', $line) && preg_match('/td.*opt/', $newlines[count($newlines)-1])) {
-            $last_state = 'opt_view';
-            $lead_spaces = lead_spaces($line);
-            $newlines[] = $lead_spaces.'<span class="opt-container" role="moreOptMenu">';
-            $newlines[] = $lead_spaces.'    <span class="moreopt" role="wrap">';
-            $newlines[] = $lead_spaces.'         <span class="moreopt-inner">';
-            // wecho($line);
-            $line = preg_replace('/href="/', 'class="tit" role="tit" href="', $line);
-            $line = preg_replace('/>详情</', '><em>详情<i></i></em><', $line);
-            // wecho($l);
-            $changes[] = $i;
-            $last_line = $line;
-        }
-        if ($last_state == 'opt_view' 
-            && preg_match('/^\s*<\?php/', $line) 
-            && preg_match('/a.+详情/', $last_line)
-        ) {
-            $newlines[] = $lead_spaces.'             <div class="sub" role="sub">';
-            $changes[] = $i;
-        }
-        if ($last_state == 'opt_view' && preg_match('/通过|拒绝/', $line)) {
-            $line = preg_replace('/(通过|拒绝)/', '<span class="no"><span><em>$1</em></span></span>', $line);
-        }
-        if ($last_state == 'opt_view' && preg_match('/审核/', $line)) {
-            $line = preg_replace('/>审核</', '><span><em>审核</em></span><', $line);
-            $changes[] = $i;
-            $last_line = $line;
-        }
-        if (($last_state == 'opt_view' || $last_state == 'opt_2a')
-            && preg_match('/<\/td>/', $line)) {
-            // addd
-            $newlines[] = $lead_spaces.'            </div>';
-            $newlines[] = $lead_spaces.'        </span>';
-            $newlines[] = $lead_spaces.'    </span>';
-            $newlines[] = $lead_spaces.'</span>';
-            $changes[] = $i;
-            $last_state = null;
-        }
-
-        // 之前的
-        if (preg_match('/class="tit" role="tit"/', $line) && preg_match('/span>/', $line)) {
-            $line = preg_replace('/<span><em>/', '<em>', $line);
-            $line = preg_replace('/<\/em><\/span>/', '</em>', $line);
-            $changes[] = $i;
-        }
-        if (preg_match('/<div class="sub" role="sub">/', $line)) {
-            $sub_mode = 1; // enter sub mode
-        }
-        if (isset($sub_mode) && $sub_mode && !preg_match('/span.+em/', $line) && preg_match('/<em>.+<i><\/i><\/em>/', $line) && !preg_match('/span>/', $line)) {
-            $line = preg_replace('/<em>(.+)<i><\/i><\/em>/', '<span><em>$1<i></i></em></span>', $line);
-            $changes[] = $i;
-            $sub_mode = 0; // leave sub mode
-        }
-
-        if ($last_state == 'td_opt' && preg_match('/<\/td>/', $line)) {
-            $last_state = null;
-            $last_line = $newlines[count($newlines)-1];
-            if ($acnt == 1 && !preg_match('/ class="btn btn-grid-opt".*<em/', $last_line)) {
-                wecho("$url line: $i_td 操作按钮 仅 1个");
-                if (preg_match('/<a.*onclick="loadModule\(this\)/', $last_line)) {
-                    // wecho($last_line);
-                    $tl = preg_replace('/href="/', 'class="btn btn-grid-opt" href="', $last_line);
-                    $tl = preg_replace('/">(.+)</', '"><em>$1</em><', $tl);
-                    $newlines[count($newlines)-1] = $tl;
-                    $changes[] = count($newlines);
-                    // wecho($l);
-                }
-            }
-            if ($acnt > 1) { // 只有一个的保持原样？？
-                wecho("$url line: $i_td 操作按钮");
-            }
-            if ($acnt > 2 && $with_php) {
-                wecho("$url line: $i_td 操作按钮 with php");
-            }
-        }
-
         if (preg_match('/input.*关键字/', $line)) {
             $small_search_btn_mode = 1;
         }
-        if (isset($small_search_btn_mode) && $small_search_btn_mode && preg_match('/label.*button.*搜索/', $line)) {
+        if (isset($small_search_btn_mode) 
+            && $small_search_btn_mode 
+            && preg_match('/label.*button.*搜索/', $line)
+            && !preg_match('/role.+searchBtn/', $line)) {
             wecho("$url line: $i 小搜索按钮");
-            $line = preg_replace('/<label.*label>/', '<button hidefocus="" class="btn btn-sh btn-sh-fixed" type="submit"><em>搜索</em></button>', $line);
+            $line = preg_replace('/<label.*label>/', '<button hidefocus="" role="searchBtn" class="btn btn-sh btn-sh-fixed" type="submit"><em>搜索</em></button>', $line);
             $changes[] = $i;
         }
         if (preg_match('/<\/div>/', $line)) {
             $small_search_btn_mode = 0;
-        }
-
-        // datepicker
-        if (preg_match('/<input.*class=".*datepicker.*".*role="datePicker".*>/', $line) 
-            && !preg_match('/props="/', $line) 
-            && preg_match('/id="\d/', $line)
-        ) {
-            wecho("$url line: $i datePicker");
-            wecho($line);
-            if (preg_match('/id="dp1/', $line)) {
-                $props = 'props="maxDate:\'#F{$dp.$D(\\\'dp2\\\')}\'';
-            } elseif (preg_match('/id="dp2/', $line)) {
-                $props = 'props="minDate:\'#F{$dp.$D(\\\'dp1\\\')}\'';
-            } else {
-                $props = 'role="datePicker';
-            }
-            $l = preg_replace('/role="datePicker/', $props, $line);
-            wecho($l);
-            // $changes[] = $i;
         }
 
         $newlines[] = $line;
