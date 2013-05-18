@@ -31,3 +31,7 @@
 
 对这个正则可以做改进，比如改成懒惰模式。
 
+```regex
+<html>\s*<head>([\s\S]*?)</head>\s*<body>([\s\S]*?)</body>\s*</html>
+```
+
