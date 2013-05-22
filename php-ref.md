@@ -1,15 +1,6 @@
 PHP 中的引用
 ---------------
 
-先来看看下面的 PHP 代码：
-
-```php
-$a = 'this';
-$b = $a;
-```
-
-其实，你一定很好奇 PHP 在执行这段代码的时候发生了什么事情。
-
 笼统的说起来，在 PHP 语言中，所有的变量都有两个属性：名和值。变量的名字肯定是个字符串，以字符串的形式保存。变量的值稍微复杂一些，值有类型的区别，还有是否是被引用的区别。在 PHP 中，变量以 zval 的形式保存起来， zval 中保存有变量的值和类型等信息。可以用 `debug_zval_dump()` 函数来查看变量的 zval 信息。
 
 zval 这个名字，大概是 zend value 的缩写。
@@ -17,16 +8,23 @@ zval 这个名字，大概是 zend value 的缩写。
 zval 的定义如下：
 ```c
 struct zval {
-	zvalue_value value;
-	unsigned char type;
-	unsigned charis_ref;
-	short refcount;
+    zvalue_value value;
+    unsigned char type;
+    unsigned char is_ref;
+    short refcount;
 }
 ```
 
 value 保存了变量的值， type 表示变量的类型。 is_ref 代表这个值是否是被引用的， refcount 则表示有多少个变量名指向这个值。
 
-现在我们回头看看最上面的 PHP 代码。当 `$a = 'this';` 执行时，一个表示 `'this'` 的 zval 被建立。变量名 `a` 指向这个 zval 。当 `$a = $b;` 执行时，系统并不会给变量 `b` 重新分配 zval ，而是让他指向同一个 zval ，并且让这个 zval 的 refcount 加一。最初的分配这个 zval 时，只有 `a` 指向它，因此，它的 refcount 是 1 。而当 `b` 也指向它的时候，这个 zval 的 refcount 就是 2 了。
+来看看下面的 PHP 代码：
+
+```php
+$a = 'this';
+$b = $a;
+```
+
+当 `$a = 'this';` 执行时，一个表示 `'this'` 的 zval 被建立。变量名 `a` 指向这个 zval 。当 `$a = $b;` 执行时，系统并不会给变量 `b` 重新分配 zval ，而是让他指向同一个 zval ，并且让这个 zval 的 refcount 加一。最初的分配这个 zval 时，只有 `a` 指向它，因此，它的 refcount 是 1 。而当 `b` 也指向它的时候，这个 zval 的 refcount 就是 2 了。
 
 我们可以看到， PHP 比较智能的节省了空间。
 
@@ -39,7 +37,7 @@ unset($a);
 
 当执行 `unset($b)` 时，系统会将变量名 `b` 移除。对 `b` 所指向的 zval ， refcount 减一。 现在，这个 zval 的 refcount 又回到了 1 。
 
-当执行 `unset($a);` 时，系统将变量名 `a` 移除，对 `a` 所指向的 zval 的 refcount 减一。这个 zval 的 refcount 减为 0 了。 refcount 为 0 也就意味着 这个 zval 不再被任何变量名引用，它的生命也就走到了尽头， PHP 会回收这个 zval 。
+当执行 `unset($a);` 时，系统将变量名 `a` 移除，对 `a` 所指向的 zval 的 refcount 减一。这个 zval 的 refcount 减为 0 了。 refcount 为 0 也就意味着 这个 zval 不再被任何变量名使用，它的生命也就走到了尽头， PHP 会回收这个 zval 。
 
 有的人还知道 PHP 里的引用赋值操作符 `=&` （严格说起来，这是两个操作符），他还认为，引用赋值操作符可以节省内存。这个真不一定，要看情况。
 
