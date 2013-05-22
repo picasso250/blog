@@ -52,3 +52,6 @@ $c =& $b;
 
 从上面可以看出， `$a $b $c` 需要两个 zval ，而如果不用引用赋值的话，一个 zval 就够了。如果不是必须用引用，就不要用引用，让 PHP 替你管理内存吧。
 
+更多请看：
+
+[References in PHP: An In-Depth Look](http://derickrethans.nl/talks/phparch-php-variables-article.pdf)
