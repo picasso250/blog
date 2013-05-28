@@ -6,14 +6,16 @@
 大家都知道，如果你写代码的时候不小心的话，可能会出现死循环的情况，比如：
 
 ```php
-function do_n($n, $callback)
+function do_n($n, $a)
 {
+    $s = 1;
     while ($n) {
-        $callback();
+        $s *= $a;
         $n--;
     }
+    return $s;
 }
-do_n(-1);
+do_n(-1, 10);
 // 悲剧的死循环了，永远都不会停止
 ```
 
