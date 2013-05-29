@@ -10,59 +10,77 @@ PHP 装逼指南
 
 我们才不会写 
 
+```php
 if ($you->laugh_at($I)) {
     $I->kill($you);
 }
+```
 
 我们会写
 
+```php
 $you->laugh_at($I) and $I->kill($you);
+```
 
 我们也不会写
 
+```php
 if (!$you->eat($shit)) {
     $I->kill($you);
 }
+```
 
 我们会写
 
+```php
 $you->eat($shit) or $I->kill($you);
+```
 
 装逼指南第二条：换种方式
 ------------------------
 
 别人这样写 for 循环
 
+```php
 for ($i=0; $i<$count; $i++) {
     // ...
 }
+```
 
 我们这样写
 
+```php
 $i = $count;
 while ($i--) {
     // ...
 }
-
+```
 别人这样写
 
+```php
 $ret = array();
 foreach ($arr as $e) {
     $ret[] = $e->prop;
 }
+```
 
 我们这样写
 
+```php
 $ret = array_map(function ($e) {return $e->prop;}, $arr);
-
-当然，进阶版就是一定要多用 array_ 系的函数，把 PHP 当成 lisp 来写，直到别人都看不出你写的是什么为止
+```
+当然，进阶版就是一定要多用 array_ 系的函数，把 PHP 当成 lisp 来写，但就是不缩进，直到别人都看不出你写的是什么为止
 
 所以，遇到这种情况
-
+```php
 $ret = array();
 foreach ($arr as $k=>$v) {
     $ret[] = "$k:$v";
 }
 $str = implode(';', $ret);
+```
+我们一定要写
 
+```php
 $ret = array_combine(array_keys($arr), array_map(function ($e) {return $e->prop;}, $arr));
+```

@@ -24,7 +24,7 @@ Well, it fits for you. but when the project grow, it starts to sucks to write SQ
 function get_blog($id); // will be used in blog page and edit page
 ```
 
-May be you will put these functions into a single file. These functions are called Model. Your previous file contain logic code which see what user input and decide what to output is called Controller. And you template will be called View.
+May be you will put these functions into a single file. These functions are called **Model**. Your previous file contain logic code which see what user input and decide what to output is called **Controller**. And you template will be called **View**.
 That's where cames the MVC.
 
 Once you extract a layer called Model, you will find something new from this new perspective.
@@ -45,8 +45,8 @@ Blog::del($id);
 $id = Blog::add($tile, $content);
 ```
 
-In order to write code like this, you should write some class files. And, you make 100 line code for blog, and another 100 line code for comment. Infact, you will find majority of these lines are similar, as most of them are CURD of database. Yes, you are repeating yourself. And, once for a while, you'd expect someone has write it for you.
-Someone did, and they call them ORM. With ORM, you can directly write code like this:
+In order to write code like this, you should write some class files. And, you make 100 line code for blog, and another 100 line code for comment. In fact, you will find majority of these lines are similar, as most of them are CURD of database. Yes, you are repeating yourself. And, once for a while, you'd expect someone has write it for you.
+Someone did, and they call it ORM. With ORM, you can directly write code like this:
 
 ```php
 <?php
@@ -65,6 +65,6 @@ foreach($books as $book) {
 ```
 The code above is from [index of Propel](http://propelorm.org/).
 
-You can use a mature lib of ORM, or you can, as I did, write your own ORM.
+You can use a mature lib of ORM, or you can, as I did, write a ORM.
 
 
