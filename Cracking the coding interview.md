@@ -61,4 +61,21 @@ class Bitmap
     }
 }
 
+// 1.2
+function reverse(&$str)
+{
+    $start = 0;
+    $end = strlen($str) - 1;
+    while ($start < $end) {
+        list($str[$start], $str[$end]) = array($str[$end], $str[$start]);
+        $start++;
+        $end--;
+    }
+}
 
+// 1.5
+function replace(&$str)
+{
+    $arr = explode(' ', $str);
+    $str = implode('%20', $arr);
+}
